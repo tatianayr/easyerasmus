@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-slave
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: postgres-slave
+  template:
+    metadata:
+      labels: 
+        app: postgres-slave
+    spec:  
+      containers:
+        - name:  projeto-grupo4-postgresql-slave-1
+          image: bitnami/postgresql:latest 
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              value: slaveuser
+            - name: POSTGRES_PASSWORD
+              value: slavepassword
+            - name: POSTGRES_DB
+              value: mydatabase
+            - name: POSTGRES_MASTER_HOST
+              value: postgres-master
+            - name: POSTGRES_MASTER_PORT
+              value: "5432"
+            - name: POSTGRES_REPLICATION_USER 
+              value: repluser
+            - name: POSTGRES_REPLICATION_PASSWORD
+              value: replpassword
+            - name: POSTGRES_ROLE
+              value: "slave" 
+            - name: POSTGRES_INIT_REPLICATION
+              value: "false"
+            - name: POSTGRES_MASTER_CONNINFO
+              value: "host=postgres-master port=5432 dbname=mydatabase user=repluser password=replpassword"
+          resources:
+            limits:
+              memory: "512Mi" 
+              cpu: "500m"     
+            requests:
+              memory: "256Mi" 
+              cpu: "250m"    
+    

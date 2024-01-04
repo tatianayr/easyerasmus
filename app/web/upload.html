@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="shortcut icon" href="imagens\logo.png" />
+
+    <link rel="stylesheet" href="bibliotecas\bootstrap\css\bootstrap.min.css" />
+    <link rel="stylesheet" href="css\font-awesome.min.css" />
+    <link rel="stylesheet" href="css\style.css" />
+    <script src="\js\jquery-3.6.0.min.js"></script>
+    <script src="bibliotecas\bootstrap\js\popper.min.js"></script>
+    <script src="bibliotecas\bootstrap\js\bootstrap.min.js"></script>
+    <script src="js\slider.js"></script>
+    <script src="js\main.js"></script>
+    <script src="js/programaRequest.js"></script>
+    <script src="app\index.js"></script>
+
+    <title>Upload</title>
+</head>
+
+<body data-scroll-animation="true">
+
+    <!-- Nav Bar -->
+    <div class="header-wrapper">
+        <div class="navbar-wrapper">
+            <div class="navbar-sticky header-2 header-transition set-sticky">
+                <header class="header">
+                    <nav class="navbar navbar-expand-lg menu_black">
+                        <div class="container">
+                            <a class="navbar-brand" href="index.html">
+                                <img src="imagens\nomelogo.png" alt="logo">
+                            </a>
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                <ul class="navbar-nav menu ms-lg-auto">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="index.html" role="button"
+                                            aria-haspopup="true" aria-expanded="false">
+                                            Home
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="about-us.html" role="button" aria-haspopup="true"
+                                            aria-expanded="false">
+                                            About Us
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="features.html" role="button"
+                                            aria-haspopup="true" aria-expanded="false">
+                                            Features
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="contact.html" role="button" aria-haspopup="true"
+                                            aria-expanded="false">
+                                            Contact Us
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="login-stu.html" role="button" aria-haspopup="true"
+                                            aria-expanded="false">
+                                            Sign In
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <ul class="navbar-nav nav_right">
+                                <li class="nav-item ab-h-btn">
+                                    <a class="nav-link about-h-btn" role="button" href="signup-stu.html">
+                                        <i class="fa fa-graduation-cap"></i>
+                                    </a>
+                                </li>
+                                <li class="nav-item ab-h-btn">
+                                    <a class="nav-link about-h-btn" href="signup-stu.html">
+                                        <i class="fa fa-university"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </header>
+            </div>
+        </div>
+    </div>
+
+    <div class="titulo-area titulo-1" data-image-src="assets/images/services/one-background.jpg">
+        <div class="overlay" data-bg-color="#282835"></div>
+        <div class="container">
+            <div class="titulo-content">
+            <h2 class="titulo-title">Adicionar programa</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Texto 1 -->
+    <section class="banner_area">
+        <div class="container">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-md-7">
+                    <form action="script" method="POST" id="contact_form" class="contact-form-box" data-wow-delay="0.2s">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="text" name="prog_tipo" id="prog_tipo" class="form-control"
+                                    placeholder="Tipo de Programa">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" name="prog_uni" id="prog_uni" class="form-control"
+                                    placeholder="Universidade">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" name="prog_pais" id="prog_pais" class="form-control"
+                                    placeholder="País">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" name="prog_cid" id="prog_cid" class="form-control"
+                                    placeholder="Cidade">
+                            </div>
+                            
+                            <div class="col-lg-12 text-center">
+                                <button type="button" class="btn" onclick="enviarPrograma()">NEXT -></button>
+                                <div id="mail_success" class="success">Enviada!.</div>
+                                <div id="mail_fail" class="error">Erro.</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-area">
+        <div class="container">
+            <div class="footer-top">
+                <div class="row">
+                    <div class="col-lg-2 col-lg-5">
+                        <aside class="footer-widget widget_about" data-wow-delay="0.1s">
+                            <a href="index.html" class="f_logo">
+                                <img src="imagens\nomelogo.png" alt="logo">
+                            </a>
+                            <div class="subscriber-wrap subscriber2">
+                                <p>Recebe todas as novidades aqui!</p>
+                                <form class="subscribe subscriber-form" id="subscriber-form2" data-style="style2">
+                                    <input type="email" name="EMAIL" class="form-control form-newsletter"
+                                        id="form-email" placeholder="Email">
+                                    <button class="btn hover_btn" type="submit">subscrever
+                                        <i class="icon-arrow" aria-hidden="true"></i>
+                                    </button>
+                                </form>
+                                <div id="validator-subscriber" class="form-result subscriber-result-2"></div>
+                            </div>
+                        </aside>
+                    </div>
+                    <div class="col-lg-2 col-lg-7">
+                        <aside class="footer-widget widget_navigate">
+                            <h4 class="f-title">Navegação</h4>
+                            <ul class="footer-navigation">
+                                <li>
+                                    <a href="index.html"><i class="fa fa-angle-right" aria-hidden="true"></i> Home
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="about-us.html"><i class="fa fa-angle-right" aria-hidden="true"></i> About
+                                        Us
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="features.html"><i class="fa fa-angle-right" aria-hidden="true"></i>
+                                        Features
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="contact.html"><i class="fa fa-angle-right" aria-hidden="true"></i>
+                                        Contact Us
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="contact.html"><i class="fa fa-angle-right" aria-hidden="true"></i> Sign
+                                        In
+                                    </a>
+                                </li>
+                            </ul>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                ©2023 <a href="index.html">easyerasmus</a> All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+       document.addEventListener('DOMContentLoaded', function () {
+    const adminId = getAdminIdFromURL();
+    console.log("ID do administrador:", adminId);
+});
+
+
+async function enviarPrograma() {
+    const prog_tipo = document.getElementById("prog_tipo").value;
+    const prog_uni = document.getElementById("prog_uni").value;
+    const prog_pais = document.getElementById("prog_pais").value;
+    const prog_cid = document.getElementById("prog_cid").value;
+
+    try {
+        const token = localStorage.getItem("token");
+        const adminId = getAdminIdFromURL();
+        console.log("Admin ID:", adminId);
+        const response = await fetch("/api/programa/upload", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                prog_tipo,
+                prog_uni,
+                prog_pais,
+                prog_cid,
+                adminId: adminId,
+            }),
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            alert(data.message);
+            document.getElementById("contact_form").reset();
+            console.log("Redirecionando para oferta.html");
+            window.location.href = `oferta.html?progId=${data.progId}`;
+
+        } else {
+            alert("Erro ao fazer o upload do programa.");
+        }
+    } catch (error) {
+        console.error("Erro:", error);
+    }
+}
+
+function getAdminIdFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const adminId = urlParams.get('adminId');
+    console.log("Admin ID from URL:", adminId);
+    return adminId;
+
+}
+
+    </script>
+</body>
+
+</html>

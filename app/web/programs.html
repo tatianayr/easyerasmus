@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="shortcut icon" href="imagens\logo.png" />
+
+    <link rel="stylesheet" href="bibliotecas\bootstrap\css\bootstrap.min.css" />
+    <link rel="stylesheet" href="css\font-awesome.min.css" />
+    <link rel="stylesheet" href="css\style.css" />
+    <link rel="stylesheet" href="css\style.css" />
+
+    <script src="app\index.js"></script>
+    <script src="\js\jquery-3.6.0.min.js"></script>
+    <script src="bibliotecas\bootstrap\js\popper.min.js"></script>
+    <script src="bibliotecas\bootstrap\js\bootstrap.min.js"></script>
+    <script src="js\slider.js"></script>
+    <script src="js\main.js"></script>
+
+    <title>Programs</title>
+</head>
+
+<body data-scroll-animation="true">
+
+    <!-- Nav Bar  -->
+    <div class="header-wrapper">
+        <div class="navbar-wrapper">
+            <div class="navbar-sticky header-2 header-transition set-sticky">
+                <header class="header">
+                    <nav class="navbar navbar-expand-lg menu_black">
+                        <div class="container">
+                            <a class="navbar-brand" href="index.html">
+                                <img src="imagens\nomelogo.png" alt="logo">
+                            </a>
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                <ul class="navbar-nav menu ms-lg-auto">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="index.html" role="button"
+                                            aria-haspopup="true" aria-expanded="false">
+                                            Home
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="about-us.html"
+                                            role="button" aria-haspopup="true"
+                                            aria-expanded="false">
+                                            About Us
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="features.html" role="button"
+                                            aria-haspopup="true" aria-expanded="false">
+                                            Features
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="contact.html" role="button"
+                                            aria-haspopup="true" aria-expanded="false">
+                                            Contact Us
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="login-stu.html" role="button"
+                                            aria-haspopup="true" aria-expanded="false">
+                                            Sign In
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <ul class="navbar-nav nav_right">
+                                <li class="nav-item ab-h-btn">
+                                    <a class="nav-link about-h-btn" role="button" href="signup-stu.html">
+                                        <i class="fa fa-graduation-cap"></i>
+                                    </a>
+                                </li>
+                                <li class="nav-item ab-h-btn">
+                                    <a class="nav-link about-h-btn" href="signup-uni.html">
+                                        <i class="fa fa-university"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </header>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Texto 1  -->
+    <section class="banner_area">
+        <div class="container">
+            <div class="table-container">
+                <table class="erasmus-table">
+                    <thead>
+                        <tr>
+                            <th>PAÍS</th>
+                            <th>PROGRAMA</th>
+                            <th>UNIVERSIDADE</th>
+                            <th>CIDADE</th>
+                            <th>CURSO</th>
+                            <th>VAGA</th>
+                            <th>REQUISITOS</th>
+                            <th>MÉDIA</th>
+                        </tr>
+                    </thead>
+    
+                    <tbody id="table-body">
+                        <!-- Dados serão preenchidos dinamicamente pelo script -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    
+
+    <script>
+        async function listarProgramas() {
+            try {
+                const response = await fetch("/api/programa/listar-programas");
+                const data = await response.json();
+    
+                console.log("Dados recebidos:", data);
+    
+                const programas = Array.isArray(data.universidades) ? data.universidades : [];
+    
+                const tableBody = document.getElementById("table-body");
+    
+                programas.forEach(programa => {
+                    const newRow = tableBody.insertRow();
+    
+                    // Adicione as células com os dados do programa
+                    const programaCells = ["progPais", "progTipo", "progUni", "progCid"];
+                    programaCells.forEach(cell => {
+                        const newCell = newRow.insertCell();
+                        newCell.textContent = programa[cell];
+                    });
+    
+                    // Adicione as células com os dados da oferta
+                    const ofertaCells = ["ofCurso", "ofVaga"];
+                    ofertaCells.forEach(cell => {
+                        const newCell = newRow.insertCell();
+                        newCell.textContent = programa[cell];
+                    });
+    
+                    // Adicione as células com os dados dos requisitos
+                    const requisitosCells = ["reqCurso", "reqMedia"];
+                    requisitosCells.forEach(cell => {
+                        const newCell = newRow.insertCell();
+                        newCell.textContent = programa[cell];
+                    });
+                });
+            } catch (error) {
+                console.error("Erro ao listar programas:", error);
+            }
+        }
+    
+        document.addEventListener("DOMContentLoaded", () => {
+            listarProgramas();
+        });
+    </script>
+    
+    
+
+    <!-- Footer -->
+    <footer class="footer-area">
+        <div class="container">
+            <div class="footer-top">
+                <div class="row">
+                    <div class="col-lg-2 col-lg-5">
+                        <aside class="footer-widget widget_about">
+                            <a href="index.html" class="f_logo">
+                                <img src="imagens\nomelogo.png" alt="logo">
+                            </a>
+                            <div class="subscriber-wrap subscriber2">
+                                <p>Recebe todas as novidades aqui!</p>
+                                <form class="subscribe subscriber-form" id="subscriber-form2"
+                                    data-style="style2">
+                                    <input type="email" name="EMAIL" class="form-control form-newsletter"
+                                        id="form-email" placeholder="Email">
+                                    <button class="btn hover_btn" type="submit">subscrever
+                                        <i class="icon-arrow" aria-hidden="true"></i>
+                                    </button>
+                                </form>
+                                <div id="validator-subscriber" class="form-result subscriber-result-2"></div>
+                            </div>
+                        </aside>
+                    </div>
+                    <div class="col-lg-2 col-lg-7">
+                        <aside class="footer-widget widget_navigate">
+                            <h4 class="f-title"> Navegação </h4>
+                            <ul class="footer-navigation">
+                                <li>
+                                    <a href="index.html"><i class="fa fa-angle-right" aria-hidden="true"></i>
+                                        Home
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="about-us.html"><i class="fa fa-angle-right" aria-hidden="true"></i>
+                                        About Us
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="features.html"><i class="fa fa-angle-right" aria-hidden="true"></i>
+                                        Features
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="contact.html"><i class="fa fa-angle-right" aria-hidden="true"></i>
+                                        Contact Us
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="contact.html"><i class="fa fa-angle-right" aria-hidden="true"></i>
+                                        Sign In
+                                    </a>
+                                </li>
+                            </ul>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                ©2023 <a href="index.html"> easyerasmus </a> All rights reserved.
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

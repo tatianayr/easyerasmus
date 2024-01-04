@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-master
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: postgres-master
+  template:
+    metadata:
+      labels:
+        app: postgres-master
+    spec:  
+      containers:
+        - name: projeto-grupo4-postgresql-master-1
+          image: bitnami/postgresql:latest 
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              value: masteruser
+            - name: POSTGRES_PASSWORD
+              value: masterpassword
+            - name: POSTGRES_DB
+              value: mydatabase
+            - name: POSTGRES_ROLE
+              value: "master"
+            - name: POSTGRES_MASTER_HOST
+              value: "postgres-master" 
+            - name: POSTGRES_MASTER_PORT
+              value: "5432"
+            - name: POSTGRES_REPLICATION_USER
+              value: replicationuser
+            - name: POSTGRES_REPLICATION_PASSWORD
+              value: replicationpassword
+            - name: POSTGRES_INIT_REPLICATION
+              value: "true"
+          resources:
+            limits:
+              memory: "1Gi" 
+              cpu: "1000m"   
+            requests:
+              memory: "512Mi" 
+              cpu: "500m"    
