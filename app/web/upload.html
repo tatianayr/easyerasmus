@@ -198,10 +198,11 @@
     </footer>
 
     <script>
-       document.addEventListener('DOMContentLoaded', function () {
+      document.addEventListener('DOMContentLoaded', function () {
     const adminId = getAdminIdFromURL();
     console.log("ID do administrador:", adminId);
 });
+
 
 
 async function enviarPrograma() {
@@ -215,19 +216,20 @@ async function enviarPrograma() {
         const adminId = getAdminIdFromURL();
         console.log("Admin ID:", adminId);
         const response = await fetch("/api/programa/upload", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`,
-            },
-            body: JSON.stringify({
-                prog_tipo,
-                prog_uni,
-                prog_pais,
-                prog_cid,
-                adminId: adminId,
-            }),
-        });
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+        prog_tipo,
+        prog_uni,
+        prog_pais,
+        prog_cid,
+        adminId: adminId,
+    }),
+});
+
 
         if (response.ok) {
             const data = await response.json();
@@ -249,8 +251,8 @@ function getAdminIdFromURL() {
     const adminId = urlParams.get('adminId');
     console.log("Admin ID from URL:", adminId);
     return adminId;
-
 }
+
 
     </script>
 </body>

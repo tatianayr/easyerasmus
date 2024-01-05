@@ -22,7 +22,9 @@ async function enviarPrograma() {
             const data = await response.json();
             alert(data.message);
             document.getElementById("contact_form").reset();
-
+            
+            localStorage.setItem('progId', data.progId);
+            
             window.location.href = `oferta.html?progId=${data.progId}`;
         } else {
             alert("Erro ao fazer upload do programa.");
@@ -32,9 +34,10 @@ async function enviarPrograma() {
     }
 }
 
-async function adicionarOfertaAoPrograma(progId, /* outros parâmetros da oferta */) {
+async function adicionarOfertaAoPrograma() {
+    const progId = localStorage.getItem('progId');
+
     try {
-        console.log("Enviando dados para o servidor:", { of_curso, of_vaga });
         const response = await fetch(`/api/programa/adicionar-oferta/${progId}`, {
             method: "POST",
             headers: {
@@ -55,7 +58,9 @@ async function adicionarOfertaAoPrograma(progId, /* outros parâmetros da oferta
     }
 }
 
-async function adicionarRequisitosAoPrograma(ofertaId, req_curso, req_media) {
+async function adicionarRequisitoAoPrograma() {
+    const ofertaId = localStorage.getItem('ofertaId');
+
     try {
         const response = await fetch(`/api/programa/adicionar-requisitos/${ofertaId}`, {
             method: "POST",
@@ -63,8 +68,6 @@ async function adicionarRequisitosAoPrograma(ofertaId, req_curso, req_media) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                req_curso,
-                req_media,
             }),
         });
 
@@ -72,14 +75,16 @@ async function adicionarRequisitosAoPrograma(ofertaId, req_curso, req_media) {
             const data = await response.json();
             alert(data.message);
         } else {
-            alert("Erro ao adicionar requisitos ao programa.");
+            alert("Erro ao adicionar requisito ao programa.");
         }
     } catch (error) {
         console.error("Erro:", error);
     }
 }
 
-async function adicionarRequisitoAOferta(ofertaId, req_curso, req_media) {
+async function adicionarRequisitoAOferta() {
+    const ofertaId = localStorage.getItem('ofertaId');
+
     try {
         const response = await fetch(`/api/programa/adicionar-requisitos/${ofertaId}`, {
             method: "POST",
@@ -87,8 +92,6 @@ async function adicionarRequisitoAOferta(ofertaId, req_curso, req_media) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                req_curso,
-                req_media,
             }),
         });
 

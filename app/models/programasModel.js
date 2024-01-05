@@ -1,25 +1,26 @@
 const pool = require("../config/database");
 
 class Programa {
-    constructor(tipo, uni, pais, cid, vaga, adminId) {
+    constructor(tipo, uni, pais, cid, adminId) {
         this.tipo = tipo;
         this.uni = uni;
         this.pais = pais;
         this.cid = cid;
-        this.vaga = vaga;
+
         this.adminId = adminId;
         this.progId = null;
         this.ofertaId = null;
     }
-
     async upload() {
         const insertProgramQuery = "INSERT INTO programa (prog_tipo, prog_uni, prog_pais, prog_cid, admin_id) VALUES ($1, $2, $3, $4, $5) RETURNING prog_id";
         const programValues = [this.tipo, this.uni, this.pais, this.cid, this.adminId];
 
         try {
             const result = await pool.query(insertProgramQuery, programValues);
+
             this.progId = result.rows[0].prog_id;
-            console.log("Programa adicionado com sucesso");
+
+            console.log("Programa adicionado com sucesso. progId:", this.progId);
             return "Programa adicionado com sucesso";
         } catch (error) {
             console.log("Erro ao inserir na base de dados:", error);
@@ -32,13 +33,15 @@ class Programa {
             throw new Error("ID do programa não disponível. Execute o método 'upload' primeiro.");
         }
 
-        const insertOfertaQuery = "INSERT INTO oferta (of_curso, of_vaga, prog_id) VALUES ($1, $2, $3)";
+        const insertOfertaQuery = "INSERT INTO oferta (of_curso, of_vaga, prog_id) VALUES ($1, $2, $3) RETURNING of_id";
         const ofertaValues = [of_curso, of_vaga, this.progId];
 
         try {
-            await pool.query(insertOfertaQuery, ofertaValues);
-            console.log("Oferta adicionada com sucesso");
-            return "Oferta adicionada com sucesso";
+            const result = await pool.query(insertOfertaQuery, ofertaValues);
+            const ofId = result.rows[0].of_id;
+
+            console.log("Oferta adicionada com sucesso. ID da oferta:", ofId);
+            return ofId;
         } catch (error) {
             console.log("Erro ao inserir oferta na base de dados:", error);
             throw error;

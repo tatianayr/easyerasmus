@@ -113,7 +113,8 @@
                             </div>
 
                             <div class="col-lg-12 text-center">
-                                <button type="button" id="adicionarRequisitosButton" class="btn" onclick="adicionarOfertaAoPrograma()">Adicionar Requisitos</button>
+                                <button type="button" id="adicionarRequisitosButton" class="btn" onclick="adicionarRequisitoAOferta()">Adicionar Requisitos</button>
+
                                 <div id="mail_success_req" class="success">Enviada!.</div>
                                 <div id="mail_fail_req" class="error">Erro.</div>
                             </div>
@@ -185,58 +186,70 @@
         </div>
     </footer>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Obtém ofertaId do localStorage
-            const ofertaId = localStorage.getItem('ofertaId');
-    
-            if (!ofertaId) {
-                alert("ID da oferta não encontrado no localStorage.");
-                window.location.href = '/error.html';
-                return;
-            }
-    
-            // Realize a verificação aqui ou chame a função necessária
-            console.log("ofertaId:", ofertaId);
-    
-            const adicionarRequisitosButton = document.getElementById("adicionarRequisitosButton");
-            adicionarRequisitosButton.addEventListener("click", function () {
-                adicionarRequisitoAOferta(ofertaId);
-            });
-    
-            async function adicionarRequisitoAOferta(ofertaId) {
-                try {
-                    const req_curso = document.getElementById("req_curso").value;
-                    const req_media = document.getElementById("req_media").value;
-    
-                    // Verifica se ofertaId é definido antes de prosseguir
-                    if (!ofertaId) {
-                        alert("ID da oferta não encontrado.");
-                        return;
-                    }
-    
-                    const response = await fetch(`/api/programa/adicionar-requisitos/${ofertaId}`, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            req_curso,
-                            req_media,
-                        }),
-                    });
-    
-                    if (response.ok) {
-                        const data = await response.json();
-                        alert(data.message);
-                    } else {
-                        alert("Erro ao adicionar requisitos ao programa.");
-                    }
-                } catch (error) {
-                    console.error("Erro:", error);
-                }
-            }
+       async function obterOfertaId() {
+    console.log("Página: requisitos.html - Início da função obterOfertaId");
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const ofId = urlParams.get('ofId');
+
+    console.log("Página: requisitos.html - Oferta ID da URL:", ofId);
+
+    if (!ofId) {
+        alert("ID da oferta não encontrado na URL.");
+        window.location.href = '/error.html';
+    } else {
+        console.log("Página: requisitos.html - Oferta ID:", ofId);
+    }
+
+    return ofId;  // Certifique-se de retornar ofertaId mesmo se ele for null
+}
+
+
+
+
+
+async function adicionarRequisitoAOferta() {
+    console.log("Página de requisitos - Início da função adicionarRequisitoAOferta");
+    const ofertaId = await obterOfertaId();
+    console.log("Página de requisitos - Oferta ID: ", ofertaId);
+    const req_curso = document.getElementById("req_curso").value;
+    const req_media = document.getElementById("req_media").value;
+
+    try {
+        const ofertaId = await obterOfertaId();  // Aguardar a resolução da Promise
+        console.log("Oferta ID na função adicionarRequisitoAOferta:", ofertaId);
+        const response = await fetch(`/api/programa/adicionar-requisitos/${ofertaId}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                req_curso,
+                req_media,
+                ofertaId: ofertaId,
+            }),
         });
+
+        if (response.ok) {
+            const data = await response.json();
+            alert(data.message);
+        } else {
+            alert("Erro ao adicionar requisitos ao programa.");
+        }
+    } catch (error) {
+        console.error("Erro:", error);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', async function () {
+    const ofertaId = await obterOfertaId();
+    if (ofertaId) {
+        console.log("Oferta ID na carga da página:", ofertaId);
+        // Você pode realizar outras ações com o ID da oferta, se necessário
+    }
+});
     </script>
+    
     
     
     

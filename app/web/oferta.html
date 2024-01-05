@@ -9,15 +9,15 @@
     <link rel="stylesheet" href="bibliotecas\bootstrap\css\bootstrap.min.css" />
     <link rel="stylesheet" href="css\font-awesome.min.css" />
     <link rel="stylesheet" href="css\style.css" />
-    
+
     <script src="app\index.js"></script>
     <script src="\js\jquery-3.6.0.min.js"></script>
     <script src="bibliotecas\bootstrap\js\popper.min.js"></script>
     <script src="bibliotecas\bootstrap\js\bootstrap.min.js"></script>
     <script src="js\slider.js"></script>
     <script src="js\main.js"></script>
-    <script src="js/programaRequest.js"></script>
-    
+    <script src="js\programaRequest.js"></script>
+
     <title>oferta</title>
 </head>
 
@@ -36,8 +36,8 @@
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul class="navbar-nav menu ms-lg-auto">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="index.html" role="button"
-                                            aria-haspopup="true" aria-expanded="false">
+                                        <a class="nav-link" href="index.html" role="button" aria-haspopup="true"
+                                            aria-expanded="false">
                                             Home
                                         </a>
                                     </li>
@@ -50,8 +50,8 @@
                                     </li>
 
                                     <li class="nav-item">
-                                        <a class="nav-link" href="features.html" role="button"
-                                            aria-haspopup="true" aria-expanded="false">
+                                        <a class="nav-link" href="features.html" role="button" aria-haspopup="true"
+                                            aria-expanded="false">
                                             Features
                                         </a>
                                     </li>
@@ -95,26 +95,30 @@
         <div class="overlay" data-bg-color="#282835"></div>
         <div class="container">
             <div class="titulo-content">
-            <h2 class="titulo-title">Adicionar programa</h2>
+                <h2 class="titulo-title">Adicionar programa</h2>
             </div>
         </div>
     </div>
 
     <section class="banner_area">
         <div class="container">
-            <div class="row justify-content-center align-items-center"> 
-                <div class="col-md-7"> 
-                    <form action="script" method="POST" id="contact_form" class="contact-form-box" data-wow-delay="0.2s">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-md-7">
+                    <form action="script" method="POST" id="contact_form" class="contact-form-box"
+                        data-wow-delay="0.2s">
                         <div class="row">
                             <div class="col-md-6">
-                                <input type="text" name="of_curso" id="of_curso" class="form-control" placeholder="Cursos" value="" />
+                                <input type="text" name="of_curso" id="of_curso" class="form-control"
+                                    placeholder="Cursos" value="" />
                             </div>
                             <div class="col-md-6">
-                                <input type="text" name="of_vaga" id="of_vaga" class="form-control" placeholder="Vagas" value="" />
+                                <input type="text" name="of_vaga" id="of_vaga" class="form-control" placeholder="Vagas"
+                                    value="" />
                             </div>
-    
-                            <div class="col-lg-12 text-center"> 
-                                <button type="button" id="adicionarOfertaButton" class="btn" onclick="adicionarOfertaAoPrograma()">Adicionar Oferta</button>
+
+                            <div class="col-lg-12 text-center">
+                                <button type="button" id="adicionarOfertaButton" class="btn"
+                                    onclick="adicionarOfertaAoPrograma()">Adicionar Oferta</button>
                                 <div id="mail_success" class="success">Enviada!.</div>
                                 <div id="mail_fail" class="error">Erro.</div>
                             </div>
@@ -187,128 +191,63 @@
     </footer>
 </body>
 <!-- oferta.html -->
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const urlParams = new URLSearchParams(window.location.search);
-        const progId = urlParams.get('progId');
+ <script>
+  async function obterProgId() {
+    console.log("Página: oferta.html - Início da função obterProgId");
 
-        if (!progId) {
-            alert("ID do programa não encontrado na URL.");
-            window.location.href = '/error.html';
-            return;
-        }
+    const urlParams = new URLSearchParams(window.location.search);
+    const progId = urlParams.get('progId');
 
-        async function adicionarOfertaAoPrograma(of_curso, of_vaga) {
-            try {
-                const response = await fetch(`/api/programa/adicionar-oferta/${progId}`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        of_curso,
-                        of_vaga,
-                    }),
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    alert(data.message);
-                    window.location.href = `/requisitos.html?ofertaId=${data.ofertaId}`;
-                } else {
-                    alert("Erro ao adicionar oferta ao programa.");
-                }
-            } catch (error) {
-                console.error("Erro:", error);
-            }
-        }
-
-        const adicionarOfertaButton = document.getElementById("adicionarOfertaButton");
-        adicionarOfertaButton.addEventListener("click", function () {
-            const of_curso = document.getElementById("of_curso").value;
-            const of_vaga = document.getElementById("of_vaga").value;
-
-            adicionarOfertaAoPrograma(of_curso, of_vaga);
-        });
-    });
-
-    document.addEventListener('DOMContentLoaded', async function () {
-    // Obtém o ID da oferta do localStorage
-    const ofertaId = localStorage.getItem('ofertaId');
-
-    if (!ofertaId) {
-        alert("ID da oferta não encontrado no localStorage.");
+    if (!progId) {
+        alert("ID do programa não encontrado na URL.");
         window.location.href = '/error.html';
-        return;
     }
 
-    async function adicionarRequisitosAoPrograma(req_curso, req_media) {
-        try {
-            const response = await fetch(`/api/programa/adicionar-requisitos/${ofertaId}`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    req_curso,
-                    req_media,
-                }),
-            });
+    return progId;
+}
+async function adicionarOfertaAoPrograma() {
+    console.log("Página: oferta.html - Início da função adicionarOfertaAoPrograma");
 
-            if (response.ok) {
-                const data = await response.json();
-                alert(data.message);
-            } else {
-                alert("Erro ao adicionar requisitos ao programa.");
-            }
-        } catch (error) {
-            console.error("Erro:", error);
-        }
-    }
+    const of_curso = document.getElementById("of_curso").value;
+    const of_vaga = document.getElementById("of_vaga").value;
 
-    const adicionarRequisitosButton = document.getElementById("adicionarRequisitosButton");
-    adicionarRequisitosButton.addEventListener("click", function () {
-        const req_curso = document.getElementById("req_curso").value;
-        const req_media = document.getElementById("req_media").value;
-
-        adicionarRequisitosAoPrograma(req_curso, req_media);
-    });
-});
-
-
-    // oferta.html
-document.addEventListener('DOMContentLoaded', async function () {
     try {
-        const response = await fetch("/api/programa/upload", {
+        const progId = await obterProgId();
+        console.log("Prog ID:", progId);
+
+        const response = await fetch(`/api/programa/adicionar-oferta/${progId}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                prog_tipo,
-                prog_uni,
-                prog_pais,
-                prog_cid,
+                of_curso,
+                of_vaga,
             }),
         });
 
         if (response.ok) {
             const data = await response.json();
-            alert(data.message); // Exibe uma mensagem de sucesso
-            document.getElementById("contact_form").reset(); // Limpa o formulário
-
-            // Armazena ofertaId no localStorage
-            localStorage.setItem('ofertaId', data.progId);
-
-            // Redireciona para a página oferta.html com o ID do programa
-            window.location.href = `oferta.html?progId=${data.progId}`;
+            alert(data.message);
+            console.log("Redirecionando para requisitos.html com ofId:", data.ofId);
+            window.location.href = `requisitos.html?ofId=${data.ofId}`;
         } else {
-            alert("Erro ao fazer upload do programa.");
+            alert("Erro ao fazer o upload do programa.");
         }
     } catch (error) {
         console.error("Erro:", error);
     }
+}
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  
+    
 });
 
-</script>
+    </script>
+
 </html>
