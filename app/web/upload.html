@@ -198,12 +198,10 @@
     </footer>
 
     <script>
-      document.addEventListener('DOMContentLoaded', function () {
-    const adminId = getAdminIdFromURL();
-    console.log("ID do administrador:", adminId);
+document.addEventListener('DOMContentLoaded', function () {
+    const cursoId = getCursoIdFromURL();
+    console.log("ID do curso:", cursoId);
 });
-
-
 
 async function enviarPrograma() {
     const prog_tipo = document.getElementById("prog_tipo").value;
@@ -213,31 +211,28 @@ async function enviarPrograma() {
 
     try {
         const token = localStorage.getItem("token");
-        const adminId = getAdminIdFromURL();
-        console.log("Admin ID:", adminId);
-        const response = await fetch("/api/programa/upload", {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
-    },
-    body: JSON.stringify({
-        prog_tipo,
-        prog_uni,
-        prog_pais,
-        prog_cid,
-        adminId: adminId,
-    }),
-});
 
+        const response = await fetch("/api/programa/upload/:cursoId", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                prog_tipo,
+                prog_uni,
+                prog_pais,
+                prog_cid,
+                cursoId: getCursoIdFromURL(), 
+            }),
+        });
 
         if (response.ok) {
             const data = await response.json();
             alert(data.message);
             document.getElementById("contact_form").reset();
             console.log("Redirecionando para oferta.html");
-            window.location.href = `oferta.html?progId=${data.progId}`;
-
+            window.location.href = `oferta.html?progId=${data.progId}&cursoId=${getCursoIdFromURL()}`;
         } else {
             alert("Erro ao fazer o upload do programa.");
         }
@@ -246,11 +241,11 @@ async function enviarPrograma() {
     }
 }
 
-function getAdminIdFromURL() {
+function getCursoIdFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
-    const adminId = urlParams.get('adminId');
-    console.log("Admin ID from URL:", adminId);
-    return adminId;
+        const cursoId = urlParams.get('cursoId');
+    console.log("Curso ID from URL:", cursoId);
+    return cursoId;
 }
 
 

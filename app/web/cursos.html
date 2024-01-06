@@ -9,21 +9,21 @@
     <link rel="stylesheet" href="bibliotecas\bootstrap\css\bootstrap.min.css" />
     <link rel="stylesheet" href="css\font-awesome.min.css" />
     <link rel="stylesheet" href="css\style.css" />
+    <link rel="stylesheet" href="css\style.css" />
 
     <script src="app\index.js"></script>
     <script src="\js\jquery-3.6.0.min.js"></script>
     <script src="bibliotecas\bootstrap\js\popper.min.js"></script>
     <script src="bibliotecas\bootstrap\js\bootstrap.min.js"></script>
     <script src="js\slider.js"></script>
-    <script src="js\main.js"></script>
-    <script src="js\programaRequest.js"></script>
+    <title>Inserir Curso</title>
+    <script src="js/curso.js"></script>
 
-    <title>oferta</title>
 </head>
 
 <body data-scroll-animation="true">
-
-    <!-- Nav Bar -->
+    <div id="cursoIdContainer" style="display: none;"></div>
+    <!-- Nav Bar  -->
     <div class="header-wrapper">
         <div class="navbar-wrapper">
             <div class="navbar-sticky header-2 header-transition set-sticky">
@@ -56,6 +56,7 @@
                                         </a>
                                     </li>
 
+
                                     <li class="nav-item">
                                         <a class="nav-link" href="contact.html" role="button" aria-haspopup="true"
                                             aria-expanded="false">
@@ -79,7 +80,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item ab-h-btn">
-                                    <a class="nav-link about-h-btn" href="signup-stu.html">
+                                    <a class="nav-link about-h-btn" href="signup-uni.html">
                                         <i class="fa fa-university"></i>
                                     </a>
                                 </li>
@@ -95,32 +96,26 @@
         <div class="overlay" data-bg-color="#282835"></div>
         <div class="container">
             <div class="titulo-content">
-                <h2 class="titulo-title">Adicionar programa</h2>
+                <h2 class="titulo-title">Inserir Curso</h2>
             </div>
         </div>
     </div>
-
+    <div id="msg"></div>
+    <!-- Seção para inserir curso -->
     <section class="banner_area">
         <div class="container">
             <div class="row justify-content-center align-items-center">
                 <div class="col-md-7">
-                    <form action="script" method="POST" id="contact_form" class="contact-form-box"
-                        data-wow-delay="0.2s">
+                    <form action="#" method="POST" id="curso_form" class="contact-form-box" data-wow-delay="0.2s">
                         <div class="row">
-                            <div class="col-md-6">
-                                <input type="text" name="of_curso" id="of_curso" class="form-control"
-                                    placeholder="Cursos" value="" />
+                            <div class="col-md-12">
+                                <input type="text" name="curso_nome" id="curso_nome" class="form-control"
+                                    placeholder="Nome do Curso">
                             </div>
-                            <div class="col-md-6">
-                                <input type="text" name="of_vaga" id="of_vaga" class="form-control" placeholder="Vagas"
-                                    value="" />
-                            </div>
-
-                            <div class="col-lg-12 text-center">
-                                <button type="button" id="adicionarOfertaButton" class="btn"
-                                    onclick="adicionarOfertaAoPrograma()">Adicionar Oferta</button>
-                                <div id="mail_success" class="success">Enviada!.</div>
-                                <div id="mail_fail" class="error">Erro.</div>
+                            <div class="col-md-12">
+                                <button type="button" class="btn" onclick="adicionarCurso()">Inserir Curso</button>
+                                <div id="curso_success" class="success">Curso inserido com sucesso!</div>
+                                <div id="curso_fail" class="error">Erro ao inserir o curso.</div>
                             </div>
                         </div>
                     </form>
@@ -134,7 +129,7 @@
             <div class="footer-top">
                 <div class="row">
                     <div class="col-lg-2 col-lg-5">
-                        <aside class="footer-widget widget_about" data-wow-delay="0.1s">
+                        <aside class="footer-widget widget_about">
                             <a href="index.html" class="f_logo">
                                 <img src="imagens\nomelogo.png" alt="logo">
                             </a>
@@ -153,15 +148,16 @@
                     </div>
                     <div class="col-lg-2 col-lg-7">
                         <aside class="footer-widget widget_navigate">
-                            <h4 class="f-title">Navegação</h4>
+                            <h4 class="f-title"> Navegação </h4>
                             <ul class="footer-navigation">
                                 <li>
-                                    <a href="index.html"><i class="fa fa-angle-right" aria-hidden="true"></i> Home
+                                    <a href="index.html"><i class="fa fa-angle-right" aria-hidden="true"></i>
+                                        Home
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="about-us.html"><i class="fa fa-angle-right" aria-hidden="true"></i> About
-                                        Us
+                                    <a href="about-us.html"><i class="fa fa-angle-right" aria-hidden="true"></i>
+                                        About Us
                                     </a>
                                 </li>
                                 <li>
@@ -175,8 +171,8 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="contact.html"><i class="fa fa-angle-right" aria-hidden="true"></i> Sign
-                                        In
+                                    <a href="contact.html"><i class="fa fa-angle-right" aria-hidden="true"></i>
+                                        Sign In
                                     </a>
                                 </li>
                             </ul>
@@ -185,59 +181,21 @@
                 </div>
             </div>
             <div class="footer-copyright">
-                ©2023 <a href="index.html">easyerasmus</a> All rights reserved.
+                ©2023 <a href="index.html"> easyerasmus </a> All rights reserved.
             </div>
         </div>
     </footer>
-</body>
 
-<script>
-    async function obterProgId() {
-        console.log("Página: oferta.html - Início da função obterProgId");
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const connectButton = document.getElementById('connectButton');
 
-        const urlParams = new URLSearchParams(window.location.search);
-        const progId = urlParams.get('progId');
-
-        if (!progId) {
-            alert("ID do programa não encontrado na URL.");
-            window.location.href = '/error.html';
-        }
-
-        return progId;
-    }
-    async function adicionarOfertaAoPrograma() {
-        console.log("Página: oferta.html - Início da função adicionarOfertaAoPrograma");
-
-        const of_curso = document.getElementById("of_curso").value;
-        const of_vaga = document.getElementById("of_vaga").value;
-
-        try {
-            const progId = await obterProgId();
-            console.log("Prog ID:", progId);
-
-            const response = await fetch(`/api/programa/adicionar-oferta/${progId}`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    of_curso,
-                    of_vaga,
-                }),
+            connectButton.addEventListener('click', function (e) {
+                e.preventDefault();
+                adicionarCurso();
             });
-
-            if (response.ok) {
-                const data = await response.json();
-                alert(data.message);
-                console.log("Redirecionando para requisitos.html com ofId:", data.ofId);
-                window.location.href = `requisitos.html?ofId=${data.ofId}`;
-            } else {
-                alert("Erro ao fazer o upload do programa.");
-            }
-        } catch (error) {
-            console.error("Erro:", error);
-        }
-    }
-</script>
+        });
+    </script>
+</body>
 
 </html>

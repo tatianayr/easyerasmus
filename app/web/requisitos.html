@@ -96,8 +96,6 @@
         </div>
     </div>
 
-   
-
     <!-- Texto 2 - Requisitos -->
     <section class="banner_area">
         <div class="container">
@@ -106,7 +104,13 @@
                     <form action="script" method="POST" id="requisitos_form" class="contact-form-box" data-wow-delay="0.2s">
                         <div class="row">
                             <div class="col-md-6">
-                                <input type="text" name="req_curso" id="req_curso" class="form-control" placeholder="Cursos">
+                                <!-- Substituído o campo de texto por um dropdown -->
+                                <select name="req_curso" id="req_curso" class="form-control">
+                                    <!-- Opções do dropdown podem ser dinamicamente carregadas pelo backend -->
+                                    <option value="curso1">Curso 1</option>
+                                    <option value="curso2">Curso 2</option>
+                                    <!-- Adicione mais opções conforme necessário -->
+                                </select>
                             </div>
                             <div class="col-md-6">
                                 <input type="text" name="req_media" id="req_media" class="form-control" placeholder="Média">
@@ -201,12 +205,8 @@
         console.log("Página: requisitos.html - Oferta ID:", ofId);
     }
 
-    return ofId;  // Certifique-se de retornar ofertaId mesmo se ele for null
+    return ofId;  
 }
-
-
-
-
 
 async function adicionarRequisitoAOferta() {
     console.log("Página de requisitos - Início da função adicionarRequisitoAOferta");
@@ -216,7 +216,7 @@ async function adicionarRequisitoAOferta() {
     const req_media = document.getElementById("req_media").value;
 
     try {
-        const ofertaId = await obterOfertaId();  // Aguardar a resolução da Promise
+        const ofertaId = await obterOfertaId();  
         console.log("Oferta ID na função adicionarRequisitoAOferta:", ofertaId);
         const response = await fetch(`/api/programa/adicionar-requisitos/${ofertaId}`, {
             method: "POST",
@@ -245,14 +245,9 @@ document.addEventListener('DOMContentLoaded', async function () {
     const ofertaId = await obterOfertaId();
     if (ofertaId) {
         console.log("Oferta ID na carga da página:", ofertaId);
-        // Você pode realizar outras ações com o ID da oferta, se necessário
     }
 });
     </script>
-    
-    
-    
-    
 </body>
 
 </html>

@@ -6,14 +6,13 @@ const pool = require("../config/database");
 
 router.use(express.json());
 
-router.post('/upload', auth.verifyAuth, async function (req, res) {
+router.post('/upload/:cursoId', auth.verifyAuth, async function (req, res) {
     try {
-        const adminId = req.body.adminId;
-        console.log("adminId recebido:", adminId);
+        const cursoId = req.params.cursoId;
         const { prog_tipo, prog_uni, prog_pais, prog_cid } = req.body;
         console.log("Dados do programa:", prog_tipo, prog_uni, prog_pais, prog_cid);
 
-        const novoPrograma = new Programa(prog_tipo, prog_uni, prog_pais, prog_cid, adminId);
+        const novoPrograma = new Programa(prog_tipo, prog_uni, prog_pais, prog_cid, cursoId);
         console.log("novoPrograma:", novoPrograma);
         const message = await novoPrograma.upload();
 
@@ -30,13 +29,9 @@ router.post('/adicionar-oferta/:progId', auth.verifyAuth, async function (req, r
         const adminId = req.body.adminId;
         const progId = req.params.progId;
         const { of_curso, of_vaga } = req.body;
-
-        // Verificar se progId é válido
         if (!progId) {
             return res.status(400).json({ error: "ID do programa inválido." });
         }
-
-        // Verificar se o programa existe antes de adicionar a oferta
         const programaExistente = await buscarProgramaPorId(progId);
 
         if (!programaExistente) {
@@ -55,19 +50,10 @@ router.post('/adicionar-oferta/:progId', auth.verifyAuth, async function (req, r
     }
 });
 
-
-
-
-// Adicione o seguinte código no método adicionarOferta dentro da classe Programa
-
-
-
-
 router.post('/adicionar-requisitos/:ofertaId', auth.verifyAuth, async function (req, res) {
     try {
         const adminId = req.admin.id;
         const ofertaId = req.params.ofertaId;
-        console.log("vou passar para buscra a oferta id este valor: " + ofertaId)
         const { req_curso, req_media } = req.body;
 
         const ofertaExistente = await buscarOfertaPorId(ofertaId);
@@ -76,9 +62,16 @@ router.post('/adicionar-requisitos/:ofertaId', auth.verifyAuth, async function (
             return res.status(404).json({ error: "Oferta não encontrada." });
         }
 
+        // Aqui você precisa obter o cursoId dinamicamente
+        const cursoId = await buscarCursoIdPorNome(req_curso);
+
+        if (!cursoId) {
+            return res.status(400).json({ error: "Curso não encontrado." });
+        }
+
         const programa = new Programa(null, null, null, null, null, adminId);
-        programa.ofertaId= ofertaId;
-        const message = await programa.adicionarRequisitos( req_curso, req_media);
+        programa.ofertaId = ofertaId;
+        const message = await programa.adicionarRequisitos(cursoId, req_media);
 
         res.status(201).json({ message });
     } catch (error) {
@@ -86,6 +79,29 @@ router.post('/adicionar-requisitos/:ofertaId', auth.verifyAuth, async function (
         res.status(500).json({ error: "Erro ao adicionar requisitos à oferta." });
     }
 });
+
+
+async function buscarCursoIdPorNome(cursoNome) {
+    const query = 'SELECT curso_id FROM curso WHERE curso_nome = $1';
+    const values = [cursoNome];
+
+    try {
+        const result = await pool.query(query, values);
+
+        if (result.rows.length > 0) {
+            return result.rows[0].curso_id;
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error('Erro ao buscar curso por nome:', error);
+        throw error;
+    }
+}
+
+
+
+
 
 
 router.get('/listar-programas', async (req, res) => {
@@ -99,13 +115,13 @@ router.get('/listar-programas', async (req, res) => {
 });
 
 async function buscarOfertaPorId(ofertaId) {
- 
-        const selectOfertaQuery = "SELECT * FROM oferta WHERE of_id = $1";
-        const result = await pool.query(selectOfertaQuery, [ofertaId]);
 
-       
-        return result.rows[0];
-    
+    const selectOfertaQuery = "SELECT * FROM oferta WHERE of_id = $1";
+    const result = await pool.query(selectOfertaQuery, [ofertaId]);
+
+
+    return result.rows[0];
+
 }
 
 

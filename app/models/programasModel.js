@@ -6,14 +6,14 @@ class Programa {
         this.uni = uni;
         this.pais = pais;
         this.cid = cid;
-
         this.adminId = adminId;
         this.progId = null;
         this.ofertaId = null;
+        this.cursoId = null;
     }
     async upload() {
-        const insertProgramQuery = "INSERT INTO programa (prog_tipo, prog_uni, prog_pais, prog_cid, admin_id) VALUES ($1, $2, $3, $4, $5) RETURNING prog_id";
-        const programValues = [this.tipo, this.uni, this.pais, this.cid, this.adminId];
+        const insertProgramQuery = "INSERT INTO programa (prog_tipo, prog_uni, prog_pais, prog_cid, curso_id) VALUES ($1, $2, $3, $4, $5) RETURNING prog_id";
+        const programValues = [this.tipo, this.uni, this.pais, this.cid, this.cursoId];
 
         try {
             const result = await pool.query(insertProgramQuery, programValues);
@@ -48,13 +48,13 @@ class Programa {
         }
     }
 
-    async adicionarRequisitos(req_curso, req_media) {
+    async adicionarRequisitos(curso_id, req_media) {
         if (!this.ofertaId) {
             throw new Error("ID do programa não disponível. Execute o método 'upload' primeiro.");
         }
 
-        const insertRequisitosQuery = "INSERT INTO requisitos (req_curso, req_media, of_id) VALUES ($1, $2, $3)";
-        const requisitosValues = [req_curso, req_media, this.ofertaId];
+        const insertRequisitosQuery = "INSERT INTO requisitos (req_media, of_id, curso_id) VALUES ($1, $2, $3)";
+        const requisitosValues = [req_media, this.ofertaId, curso_id];
 
         try {
             await pool.query(insertRequisitosQuery, requisitosValues);
@@ -65,6 +65,7 @@ class Programa {
             throw error;
         }
     }
+
     async listarProgramas() {
         const listarProgramasQuery = `
         SELECT
@@ -94,5 +95,4 @@ class Programa {
         }
     }
 }
-
 module.exports = Programa;
