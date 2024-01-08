@@ -42,6 +42,7 @@ function exibirResultados(resultados) {
         const cell10 = row.insertCell(9);
         const editButton = document.createElement('button');
         editButton.textContent = 'Editar';
+        editButton.classList.add('editButton'); 
         editButton.addEventListener('click', () => preencherFormularioEdicao(resultado));
         cell10.appendChild(editButton);
     });
@@ -106,6 +107,7 @@ async function enviarAtualizacao() {
 
 function preencherFormularioEdicao(resultado) {
     const form = document.getElementById('edicaoForm');
+    editButton.classList.add('editButton'); 
 
     // Preencha os campos do formulário com os dados do resultado
     form.elements['prog_id'].value = resultado.prog_id;
