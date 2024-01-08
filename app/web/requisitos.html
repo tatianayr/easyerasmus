@@ -16,6 +16,7 @@
     <script src="js\slider.js"></script>
     <script src="js\main.js"></script>
     <script src="js/programaRequest.js"></script>
+    <script src="js/cursoRequest.js"></script>
     <title>Requisitos</title>
 </head>
 
@@ -106,11 +107,9 @@
                             <div class="col-md-6">
                                 <!-- Substituído o campo de texto por um dropdown -->
                                 <select name="req_curso" id="req_curso" class="form-control">
-                                    <!-- Opções do dropdown podem ser dinamicamente carregadas pelo backend -->
-                                    <option value="curso1">Curso 1</option>
-                                    <option value="curso2">Curso 2</option>
-                                    <!-- Adicione mais opções conforme necessário -->
+                                    <!-- Remova as opções estáticas -->
                                 </select>
+                                
                             </div>
                             <div class="col-md-6">
                                 <input type="text" name="req_media" id="req_media" class="form-control" placeholder="Média">
@@ -190,41 +189,53 @@
         </div>
     </footer>
     <script>
-       async function obterOfertaId() {
-    console.log("Página: requisitos.html - Início da função obterOfertaId");
+ document.addEventListener('DOMContentLoaded', async function () {
+    const ofertaId = await obterOfertaId();
+    if (ofertaId) {
+        console.log("Oferta ID na carga da página:", ofertaId);
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const ofId = urlParams.get('ofId');
+        try {
+            const cursos = await obterListaCursos();
+            const dropdown = document.getElementById("req_curso");
 
-    console.log("Página: requisitos.html - Oferta ID da URL:", ofId);
-
-    if (!ofId) {
-        alert("ID da oferta não encontrado na URL.");
-        window.location.href = '/error.html';
-    } else {
-        console.log("Página: requisitos.html - Oferta ID:", ofId);
+            cursos.forEach(curso => {
+                const option = document.createElement("option");
+                option.value = curso.curso_id;
+                option.text = curso.curso_nome;
+                dropdown.appendChild(option);
+            });
+        } catch (error) {
+            console.error("Erro ao obter lista de cursos:", error);
+        }
     }
-
-    return ofId;  
-}
-
+});
 async function adicionarRequisitoAOferta() {
     console.log("Página de requisitos - Início da função adicionarRequisitoAOferta");
     const ofertaId = await obterOfertaId();
     console.log("Página de requisitos - Oferta ID: ", ofertaId);
-    const req_curso = document.getElementById("req_curso").value;
+
+    // Obter o valor do curso_id
+    const req_curso_element = document.getElementById("req_curso");
+    const req_curso_id = req_curso_element.value; 
+
     const req_media = document.getElementById("req_media").value;
 
     try {
-        const ofertaId = await obterOfertaId();  
         console.log("Oferta ID na função adicionarRequisitoAOferta:", ofertaId);
+
+        // Verificar se o valor do curso_id não é undefined
+        if (req_curso_id === undefined) {
+            alert("Por favor, selecione um curso.");
+            return;
+        }
+
         const response = await fetch(`/api/programa/adicionar-requisitos/${ofertaId}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                req_curso,
+                curso_id: req_curso_id, 
                 req_media,
                 ofertaId: ofertaId,
             }),
@@ -241,12 +252,7 @@ async function adicionarRequisitoAOferta() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', async function () {
-    const ofertaId = await obterOfertaId();
-    if (ofertaId) {
-        console.log("Oferta ID na carga da página:", ofertaId);
-    }
-});
+
     </script>
 </body>
 

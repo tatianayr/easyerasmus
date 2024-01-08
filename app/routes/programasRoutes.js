@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const auth = require("../middleware/auth");
 const Programa = require("../models/programasModel");
+const Curso = require("../models/programasModel");
 const pool = require("../config/database");
 
 router.use(express.json());
@@ -54,20 +55,19 @@ router.post('/adicionar-requisitos/:ofertaId', auth.verifyAuth, async function (
     try {
         const adminId = req.admin.id;
         const ofertaId = req.params.ofertaId;
-        const { req_curso, req_media } = req.body;
+        const { curso_id, req_media } = req.body;
+
+        console.log("Dados a serem recebidos:", { ofertaId, curso_id, req_media });
 
         const ofertaExistente = await buscarOfertaPorId(ofertaId);
+     
 
         if (!ofertaExistente) {
             return res.status(404).json({ error: "Oferta não encontrada." });
         }
 
-        // Aqui você precisa obter o cursoId dinamicamente
-        const cursoId = await buscarCursoIdPorNome(req_curso);
-
-        if (!cursoId) {
-            return res.status(400).json({ error: "Curso não encontrado." });
-        }
+        // curso_id já é o ID do curso, então não é necessário buscar por nome
+        const cursoId = await buscarCursoIdPorId(curso_id);
 
         const programa = new Programa(null, null, null, null, null, adminId);
         programa.ofertaId = ofertaId;
@@ -75,10 +75,46 @@ router.post('/adicionar-requisitos/:ofertaId', auth.verifyAuth, async function (
 
         res.status(201).json({ message });
     } catch (error) {
-        console.error(error);
+        console.error("Erro ao processar a solicitação:", error);
         res.status(500).json({ error: "Erro ao adicionar requisitos à oferta." });
     }
 });
+async function buscarCursoIdPorId(cursoId) {
+    const query = 'SELECT curso_id FROM curso WHERE curso_id = $1';
+    const values = [cursoId];
+
+    try {
+        const result = await pool.query(query, values);
+
+        if (result.rows.length > 0) {
+            return result.rows[0].curso_id;
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error('Erro ao buscar curso por ID:', error);
+        throw error;
+    }
+}
+
+
+async function buscarOfertaPorId(ofertaId) {
+    const query = 'SELECT * FROM oferta WHERE of_id = $1';
+    const values = [ofertaId];
+
+    try {
+        const result = await pool.query(query, values);
+
+        if (result.rows.length > 0) {
+            return result.rows[0];
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error('Erro ao buscar oferta por ID:', error);
+        throw error;
+    }
+}
 
 
 async function buscarCursoIdPorNome(cursoNome) {
@@ -87,6 +123,7 @@ async function buscarCursoIdPorNome(cursoNome) {
 
     try {
         const result = await pool.query(query, values);
+        console.log("Resultado da consulta para", cursoNome, ":", result.rows);
 
         if (result.rows.length > 0) {
             return result.rows[0].curso_id;
@@ -98,6 +135,8 @@ async function buscarCursoIdPorNome(cursoNome) {
         throw error;
     }
 }
+
+
 
 
 

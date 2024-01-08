@@ -25,10 +25,17 @@ router.get('/listar', auth.verifyAuth, async (req, res) => {
         const cursoModel = new Curso(adminId);
         const cursos = await cursoModel.listarCursos();
 
-        res.status(200).json({ cursos });
+        // Mapear os cursos para um formato mais adequado para a resposta JSON
+        const cursosFormatados = cursos.map(curso => ({
+            curso_id: curso.curso_id,
+            curso_nome: curso.curso_nome
+        }));
+
+        res.status(200).json({ cursos: cursosFormatados });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: `Erro ao listar cursos: ${error.message}` });
     }
 });
+
 module.exports = router;

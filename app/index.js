@@ -22,11 +22,12 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 const adminRouter = require("./routes/adminRoutes");
 const userRouter = require("./routes/estudanteRoutes");
 const progRouter = require("./routes/programasRoutes");
+const custoRouter= require("./routes/cursosRoutes");
 
 app.use("/api/admin", adminRouter);
 app.use("/api/user", userRouter);
 app.use("/api/programa", progRouter);
-
+app.use("/api/curso", custoRouter);
 app.use(express.static(path.join(__dirname, './web')));
 
 const port = parseInt(process.env.port || '8080');

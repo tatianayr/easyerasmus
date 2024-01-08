@@ -48,23 +48,22 @@ class Programa {
         }
     }
 
-    async adicionarRequisitos(curso_id, req_media) {
-        if (!this.ofertaId) {
-            throw new Error("ID do programa não disponível. Execute o método 'upload' primeiro.");
-        }
-
-        const insertRequisitosQuery = "INSERT INTO requisitos (req_media, of_id, curso_id) VALUES ($1, $2, $3)";
-        const requisitosValues = [req_media, this.ofertaId, curso_id];
-
+    async adicionarRequisitos(cursoId, req_media) {
+        const query = `
+            INSERT INTO requisitos (req_media, of_id, curso_id)
+            VALUES ($1, $2, $3)
+        `;
+        const values = [req_media, this.ofertaId, cursoId];
+    
         try {
-            await pool.query(insertRequisitosQuery, requisitosValues);
-            console.log("Requisitos adicionados com sucesso");
-            return "Requisitos adicionados com sucesso";
+            const result = await pool.query(query, values);
+            return "Requisitos adicionados com sucesso.";
         } catch (error) {
-            console.log("Erro ao inserir requisitos na base de dados:", error);
+            console.error('Erro ao inserir requisitos na base de dados:', error);
             throw error;
         }
     }
+    
 
     async listarProgramas() {
         const listarProgramasQuery = `

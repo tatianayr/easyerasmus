@@ -38,5 +38,6 @@ class Curso {
             throw error;
         }
     }
+    
 }
 module.exports = Curso;
