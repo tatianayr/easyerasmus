@@ -25,7 +25,6 @@ router.get('/auth', auth.verifyAuth, async function (req, res, next) {
         user.id = req.user.id;
         user.nome = req.user.nome;
         user.uni = req.user.uni;
-        user.curso = req.user.curso;
 
         res.status(result.status).send(user);
 
@@ -42,8 +41,7 @@ router.post('/register', async function (req, res) {
             nome: req.body.nome,
             mail: req.body.mail,
             pass: req.body.pass,
-            uni: req.body.uni,
-            curso: req.body.curso
+            uni: req.body.uni
         };
 
         console.log('Received registration request:', user);
@@ -88,5 +86,21 @@ router.get('/listar-universidades', async function (req, res) {
         res.status(500).json({ error: "Erro ao listar universidades." });
     }
 });
+
+router.get('/listar-cursostu/:estId', async function (req, res) {
+    try {
+        const estId = req.params.estId; // Corrected to use req.params
+        const userInstance = new User();
+        const cursos = await userInstance.listarCursoStu(estId);
+        res.status(200).json({ cursos });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Erro ao listar cursos do aluno." });
+    }
+});
+
+
+
+
 
 module.exports = router;

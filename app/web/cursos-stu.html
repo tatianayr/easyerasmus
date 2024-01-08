@@ -17,7 +17,8 @@
     <script src="js\main.js"></script>
     <script src="js/programaRequest.js"></script>
     <script src="js/cursoRequest.js"></script>
-    <title>Requisitos</title>
+    <script src="js/userRequests.js"></script>
+    <title>CursoSTU</title>
 </head>
 
 <body data-scroll-animation="true">
@@ -96,7 +97,6 @@
 
         </div>
     </div>
-
     <section class="banner_area">
         <div class="container">
             <div class="row justify-content-center align-items-center">
@@ -106,9 +106,8 @@
                             <div class="col-md-6">
                                 <!-- Substituído o campo de texto por um dropdown -->
                                 <select name="curso_nome" id="curso_nome" class="form-control">
-                                    <!-- Remova as opções estáticas -->
+                                    <!-- Opções dinâmicas serão preenchidas via JavaScript -->
                                 </select>
-
                             </div>
                         </div>
                     </form>
@@ -116,6 +115,7 @@
             </div>
         </div>
     </section>
+
 
     <footer class="footer-area">
         <div class="container">
@@ -177,3 +177,42 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        async function listarCursoSTU() {
+            try {
+                const response = await fetch('/listar-cursostu');
+                const data = await response.json();
+                return data.cursos;
+            } catch (error) {
+                console.error('Erro ao obter cursos do aluno:', error);
+                throw error;
+            }
+        }
+
+        window.addEventListener('load', async function () {
+            try {
+                // Call the listarCursoSTU function to get the list of courses
+                const cursos = await listarCursoSTU();
+
+                // Select the dropdown element by its ID
+                const cursoDropdown = document.getElementById('curso_nome');
+
+                // Clear any existing options
+                cursoDropdown.innerHTML = "";
+
+                // Iterate through the courses and create options dynamically
+                for (let i = 0; i < cursos.length; i++) {
+                    let option = document.createElement("option");
+                    option.value = cursos[i];
+                    option.text = cursos[i];
+                    cursoDropdown.add(option);
+                }
+            } catch (error) {
+                console.error('Erro ao preencher dropdown de cursos:', error);
+            }
+        });
+
+
+
+    </script>

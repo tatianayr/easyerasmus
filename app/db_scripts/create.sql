@@ -15,10 +15,10 @@ CREATE TABLE curso (
 CREATE TABLE estudante (
     est_id SERIAL PRIMARY KEY,
     est_nome VARCHAR(70) NOT NULL,
-    est_mail VARCHAR(70) NOT NULL,
+    est_mail VARCHAR(70) NOT NULL,   
     est_pass VARCHAR(200) NOT NULL, 
     est_uni VARCHAR(70) NOT NULL,
-    est_curso VARCHAR(70) NOT NULL,
+    est_curso VARCHAR(70),
     est_token VARCHAR(200),
     curso_id INTEGER REFERENCES curso(curso_id) ON DELETE CASCADE ON UPDATE CASCADE
 );

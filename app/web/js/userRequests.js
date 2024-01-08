@@ -1,6 +1,6 @@
-async function requestRegister(nome, mail, pass, uni, curso) {
+async function requestRegister(nome, mail, pass, uni) {
     try {
-        console.log('Requesting registration for:', nome, mail, pass, uni, curso);
+        console.log('Requesting registration for:', nome, mail, pass, uni);
         const response = await fetch('/api/user/register', {
             method: 'POST',
             headers: {
@@ -11,8 +11,7 @@ async function requestRegister(nome, mail, pass, uni, curso) {
                 nome: nome,
                 mail: mail,
                 pass: pass,
-                uni: uni,
-                curso: curso
+                uni: uni
             })
         });
 
@@ -56,10 +55,9 @@ async function register() {
         let mail = document.getElementById('mail').value;
         let pass = document.getElementById('pass').value;
         let uni = document.getElementById('uni').value;
-        let curso = document.getElementById('curso').value;
 
-        if (nome && mail && pass && uni && curso) {
-            let res = await requestRegister(nome, mail, pass, uni, curso);
+        if (nome && mail && pass && uni) {
+            let res = await requestRegister(nome, mail, pass, uni);
 
             if (res.successful) {
                 msgDOM.textContent = 'Account created. Go to login page';
@@ -93,7 +91,8 @@ async function login() {
 
             if (res.status === 200) {
                 msgDOM.textContent = 'Successful Login!';
-                window.location.href = 'programs.html';
+                const estId = res.estId || '';
+                window.location.href = `cursos-stu.html?estId=${estId}`;
             } else {
                 msgDOM.textContent = 'Login failed. Check your credentials.';
             }
@@ -122,6 +121,17 @@ async function listarUniversidades() {
         return data.universidades;
     } catch (error) {
         console.error('Erro ao obter universidades:', error);
+        throw error;
+    }
+}
+
+async function listarCursoSTU() {
+    try {
+        const response = await fetch(`/api/user/listar-cursostu/${estId}`);
+        const data = await response.json();
+        return data.cursos;
+    } catch (error) {
+        console.error('Erro ao obter cursos do aluno:', error);
         throw error;
     }
 }
