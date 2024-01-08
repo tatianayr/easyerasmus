@@ -106,9 +106,7 @@
                         data-wow-delay="0.2s">
                         <div class="row">
                             <div class="col-md-6">
-                                <!-- Substituído o campo de texto por um dropdown -->
                                 <select name="req_curso" id="req_curso" class="form-control">
-                                    <!-- Remova as opções estáticas -->
                                 </select>
 
                             </div>
@@ -217,7 +215,6 @@
             const ofertaId = await obterOfertaId();
             console.log("Página de requisitos - Oferta ID: ", ofertaId);
 
-            // Obter o valor do curso_id
             const req_curso_element = document.getElementById("req_curso");
             const req_curso_id = req_curso_element.value;
 
@@ -225,8 +222,6 @@
 
             try {
                 console.log("Oferta ID na função adicionarRequisitoAOferta:", ofertaId);
-
-                // Verificar se o valor do curso_id não é undefined
                 if (req_curso_id === undefined) {
                     alert("Por favor, selecione um curso.");
                     return;

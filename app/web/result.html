@@ -20,41 +20,39 @@
     <title>Requisitos</title>
     <style>
         #resultTableBody button.editButton {
-    background-color: #e73c37;
-    color: #fff;
-    padding: 6px 12px;
-    border: none;
-    cursor: pointer;
-}
+            background-color: #e73c37;
+            color: #fff;
+            padding: 6px 12px;
+            border: none;
+            cursor: pointer;
+        }
 
-#resultTableBody button.editButton:hover {
-    background-color: #e73c37;
-}
-
-    
+        #resultTableBody button.editButton:hover {
+            background-color: #e73c37;
+        }
 
         #edicaoForm {
-    max-width: 500px;
-    margin: 0 auto;
-}
+            max-width: 500px;
+            margin: 0 auto;
+        }
 
-#edicaoForm input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-}
+        #edicaoForm input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
 
-#edicaoForm button {
-    background-color: #e73c37;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-}
+        #edicaoForm button {
+            background-color: #e73c37;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
 
-#edicaoForm button:hover {
-    background-color: #0056b3;
-}
+        #edicaoForm button:hover {
+            background-color: #0056b3;
+        }
 
 
         .navbar-wrapper {
@@ -62,10 +60,8 @@
         }
 
         .footer-area {
-            margin-top: 200px; 
+            margin-top: 200px;
         }
-
-    
     </style>
 </head>
 
@@ -242,47 +238,43 @@
             </div>
         </div>
     </footer>
-<script>
-    async function enviarAtualizacao() {
-    const adminId = obterAdminIdDoLocalStorage();
+    <script>
+        async function enviarAtualizacao() {
+            const adminId = obterAdminIdDoLocalStorage();
 
-    if (adminId) {
-        const form = document.getElementById('edicaoForm');
-        const formData = new FormData(form);
+            if (adminId) {
+                const form = document.getElementById('edicaoForm');
+                const formData = new FormData(form);
 
-        // Remove campos vazios do formData
-        for (const [key, value] of formData.entries()) {
-            if (value === '') {
-                formData.delete(key);
+                for (const [key, value] of formData.entries()) {
+                    if (value === '') {
+                        formData.delete(key);
+                    }
+                }
+
+                try {
+                    const response = await fetch(`/api/programa/atualizar-resultado/${adminId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(Object.fromEntries(formData)),
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        console.log("Atualização bem-sucedida:", data.message);
+                        obterEExibirResultados();
+                    } else {
+                        console.error("Erro na atualização:", data.error);
+                    }
+                } catch (error) {
+                    console.error("Erro na requisição:", error);
+                }
             }
         }
 
-        try {
-            const response = await fetch(`/api/programa/atualizar-resultado/${adminId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(Object.fromEntries(formData)),
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                console.log("Atualização bem-sucedida:", data.message);
-                // Chame a função para obter e exibir resultados novamente após a atualização
-                obterEExibirResultados();
-            } else {
-                console.error("Erro na atualização:", data.error);
-            }
-        } catch (error) {
-            console.error("Erro na requisição:", error);
-        }
-    }
-}
-
-</script>
-  
+    </script>
 </body>
-
 </html>

@@ -10,7 +10,6 @@ function exibirResultados(resultados) {
     resultados.forEach(resultado => {
         const row = tableBody.insertRow();
 
-        // Células existentes
         const cell1 = row.insertCell(0);
         cell1.textContent = resultado.admin_uni;
 
@@ -38,11 +37,10 @@ function exibirResultados(resultados) {
         const cell9 = row.insertCell(8);
         cell9.textContent = resultado.req_media;
 
-        // Célula de botão de edição
         const cell10 = row.insertCell(9);
         const editButton = document.createElement('button');
         editButton.textContent = 'Editar';
-        editButton.classList.add('editButton'); 
+        editButton.classList.add('editButton');
         editButton.addEventListener('click', () => preencherFormularioEdicao(resultado));
         cell10.appendChild(editButton);
     });
@@ -73,7 +71,6 @@ async function enviarAtualizacao() {
         const form = document.getElementById('edicaoForm');
         const formData = new FormData(form);
 
-        // Remove campos vazios do formData
         for (const [key, value] of formData.entries()) {
             if (value === '') {
                 formData.delete(key);
@@ -93,7 +90,6 @@ async function enviarAtualizacao() {
 
             if (response.ok) {
                 console.log("Atualização bem-sucedida:", data.message);
-                // Chame a função para obter e exibir resultados novamente após a atualização
                 obterEExibirResultados();
             } else {
                 console.error("Erro na atualização:", data.error);
@@ -107,9 +103,8 @@ async function enviarAtualizacao() {
 
 function preencherFormularioEdicao(resultado) {
     const form = document.getElementById('edicaoForm');
-    editButton.classList.add('editButton'); 
+    editButton.classList.add('editButton');
 
-    // Preencha os campos do formulário com os dados do resultado
     form.elements['prog_id'].value = resultado.prog_id;
     form.elements['prog_tipo'].value = resultado.prog_tipo;
     form.elements['prog_uni'].value = resultado.prog_uni;
