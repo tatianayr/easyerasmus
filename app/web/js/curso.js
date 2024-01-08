@@ -28,7 +28,8 @@ async function adicionarCurso() {
                 console.log("Curso ID:", cursoId);
 
                 document.getElementById('cursoIdContainer').textContent = cursoId;
-                window.location.href = `upload.html?cursoId=${cursoId}`;
+                window.location.href = `upload.html?cursoId=${cursoId}&adminId=${adminId}`;
+
             } catch (error) {
                 console.error('Erro ao processar resposta JSON:', error);
             }

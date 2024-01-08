@@ -35,8 +35,8 @@
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul class="navbar-nav menu ms-lg-auto">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="index.html" role="button"
-                                            aria-haspopup="true" aria-expanded="false">
+                                        <a class="nav-link" href="index.html" role="button" aria-haspopup="true"
+                                            aria-expanded="false">
                                             Home
                                         </a>
                                     </li>
@@ -49,8 +49,8 @@
                                     </li>
 
                                     <li class="nav-item">
-                                        <a class="nav-link" href="features.html" role="button"
-                                            aria-haspopup="true" aria-expanded="false">
+                                        <a class="nav-link" href="features.html" role="button" aria-haspopup="true"
+                                            aria-expanded="false">
                                             Features
                                         </a>
                                     </li>
@@ -93,7 +93,7 @@
     <div class="titulo-area titulo-1" data-image-src="assets/images/services/one-background.jpg">
         <div class="overlay" data-bg-color="#282835"></div>
         <div class="container">
-           
+
         </div>
     </div>
 
@@ -102,21 +102,24 @@
         <div class="container">
             <div class="row justify-content-center align-items-center">
                 <div class="col-md-7">
-                    <form action="script" method="POST" id="requisitos_form" class="contact-form-box" data-wow-delay="0.2s">
+                    <form action="script" method="POST" id="requisitos_form" class="contact-form-box"
+                        data-wow-delay="0.2s">
                         <div class="row">
                             <div class="col-md-6">
                                 <!-- Substituído o campo de texto por um dropdown -->
                                 <select name="req_curso" id="req_curso" class="form-control">
                                     <!-- Remova as opções estáticas -->
                                 </select>
-                                
+
                             </div>
                             <div class="col-md-6">
-                                <input type="text" name="req_media" id="req_media" class="form-control" placeholder="Média">
+                                <input type="text" name="req_media" id="req_media" class="form-control"
+                                    placeholder="Média">
                             </div>
 
                             <div class="col-lg-12 text-center">
-                                <button type="button" id="adicionarRequisitosButton" class="btn" onclick="adicionarRequisitoAOferta()">Adicionar Requisitos</button>
+                                <button type="button" id="adicionarRequisitosButton" class="btn"
+                                    onclick="adicionarRequisitoAOferta()">Adicionar Requisitos</button>
 
                                 <div id="mail_success_req" class="success">Enviada!.</div>
                                 <div id="mail_fail_req" class="error">Erro.</div>
@@ -189,68 +192,70 @@
         </div>
     </footer>
     <script>
- document.addEventListener('DOMContentLoaded', async function () {
-    const ofertaId = await obterOfertaId();
-    if (ofertaId) {
-        console.log("Oferta ID na carga da página:", ofertaId);
+        document.addEventListener('DOMContentLoaded', async function () {
+            const ofertaId = await obterOfertaId();
+            if (ofertaId) {
+                console.log("Oferta ID na carga da página:", ofertaId);
 
-        try {
-            const cursos = await obterListaCursos();
-            const dropdown = document.getElementById("req_curso");
+                try {
+                    const cursos = await obterListaCursos();
+                    const dropdown = document.getElementById("req_curso");
 
-            cursos.forEach(curso => {
-                const option = document.createElement("option");
-                option.value = curso.curso_id;
-                option.text = curso.curso_nome;
-                dropdown.appendChild(option);
-            });
-        } catch (error) {
-            console.error("Erro ao obter lista de cursos:", error);
-        }
-    }
-});
-async function adicionarRequisitoAOferta() {
-    console.log("Página de requisitos - Início da função adicionarRequisitoAOferta");
-    const ofertaId = await obterOfertaId();
-    console.log("Página de requisitos - Oferta ID: ", ofertaId);
-
-    // Obter o valor do curso_id
-    const req_curso_element = document.getElementById("req_curso");
-    const req_curso_id = req_curso_element.value; 
-
-    const req_media = document.getElementById("req_media").value;
-
-    try {
-        console.log("Oferta ID na função adicionarRequisitoAOferta:", ofertaId);
-
-        // Verificar se o valor do curso_id não é undefined
-        if (req_curso_id === undefined) {
-            alert("Por favor, selecione um curso.");
-            return;
-        }
-
-        const response = await fetch(`/api/programa/adicionar-requisitos/${ofertaId}`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                curso_id: req_curso_id, 
-                req_media,
-                ofertaId: ofertaId,
-            }),
+                    cursos.forEach(curso => {
+                        const option = document.createElement("option");
+                        option.value = curso.curso_id;
+                        option.text = curso.curso_nome;
+                        dropdown.appendChild(option);
+                    });
+                } catch (error) {
+                    console.error("Erro ao obter lista de cursos:", error);
+                }
+            }
         });
+        async function adicionarRequisitoAOferta() {
+            console.log("Página de requisitos - Início da função adicionarRequisitoAOferta");
+            const ofertaId = await obterOfertaId();
+            console.log("Página de requisitos - Oferta ID: ", ofertaId);
 
-        if (response.ok) {
-            const data = await response.json();
-            alert(data.message);
-        } else {
-            alert("Erro ao adicionar requisitos ao programa.");
+            // Obter o valor do curso_id
+            const req_curso_element = document.getElementById("req_curso");
+            const req_curso_id = req_curso_element.value;
+
+            const req_media = document.getElementById("req_media").value;
+
+            try {
+                console.log("Oferta ID na função adicionarRequisitoAOferta:", ofertaId);
+
+                // Verificar se o valor do curso_id não é undefined
+                if (req_curso_id === undefined) {
+                    alert("Por favor, selecione um curso.");
+                    return;
+                }
+
+                const response = await fetch(`/api/programa/adicionar-requisitos/${ofertaId}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        curso_id: req_curso_id,
+                        req_media,
+                        ofertaId: ofertaId,
+                    }),
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    alert(data.message);
+                    window.location.href = `result.html`;
+                } else {
+                    alert("Erro ao adicionar requisitos ao programa.");
+                }
+
+            } catch (error) {
+                console.error("Erro:", error);
+            }
         }
-    } catch (error) {
-        console.error("Erro:", error);
-    }
-}
 
 
     </script>

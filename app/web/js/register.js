@@ -84,9 +84,10 @@ async function login() {
 
         if (res.successful) {
             console.log("AdminId:", res.adminId); 
+            localStorage.setItem('adminId', res.adminId || '');
             msgDOM.textContent = "Login successful. Redirecting...";
             const adminId = res.adminId || '';
-            window.location.href = `upload.html?adminId=${adminId}`;
+            window.location.href = `cursos.html?adminId=${adminId}`;
         } else {
             msgDOM.textContent = "Login failed. Please check your email and password.";
         }
@@ -96,6 +97,7 @@ async function login() {
         msgDOM.textContent = "An error occurred during login";
     }
 }
+
 
 document.addEventListener('DOMContentLoaded', function () {
     const connectButton = document.getElementById('connectButton');

@@ -9,23 +9,30 @@
     <link rel="stylesheet" href="bibliotecas\bootstrap\css\bootstrap.min.css" />
     <link rel="stylesheet" href="css\font-awesome.min.css" />
     <link rel="stylesheet" href="css\style.css" />
-    <link rel="stylesheet" href="css\style.css" />
-
     <script src="app\index.js"></script>
     <script src="\js\jquery-3.6.0.min.js"></script>
     <script src="bibliotecas\bootstrap\js\popper.min.js"></script>
     <script src="bibliotecas\bootstrap\js\bootstrap.min.js"></script>
     <script src="js\slider.js"></script>
     <script src="js\main.js"></script>
-    <script src="js/userRequests.js"></script>
+    <script src="js/programaRequest.js"></script>
+    <script src="js/result.js"></script>
+    <title>Requisitos</title>
+    <style>
+        /* Adicione este bloco de estilo para afastar a navbar e o footer da tabela na página de resultados */
 
-    <title> SignUp Stu </title>
-    >
+        .navbar-wrapper {
+            margin-bottom: 200px; /* Ajuste conforme necessário */
+        }
+
+        .footer-area {
+            margin-top: 200px; /* Ajuste conforme necessário */
+        }
+    </style>
 </head>
 
 <body data-scroll-animation="true">
 
-    <!-- Nav Bar  -->
     <div class="header-wrapper">
         <div class="navbar-wrapper">
             <div class="navbar-sticky header-2 header-transition set-sticky">
@@ -58,7 +65,6 @@
                                         </a>
                                     </li>
 
-
                                     <li class="nav-item">
                                         <a class="nav-link" href="contact.html" role="button" aria-haspopup="true"
                                             aria-expanded="false">
@@ -82,7 +88,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item ab-h-btn">
-                                    <a class="nav-link about-h-btn" href="signup-uni.html">
+                                    <a class="nav-link about-h-btn" href="signup-stu.html">
                                         <i class="fa fa-university"></i>
                                     </a>
                                 </li>
@@ -94,67 +100,45 @@
         </div>
     </div>
 
-    <div id="msg"></div>
-    <!-- Texto 1  -->
-    <section class="banner_area">
+    <div class="titulo-area titulo-1" data-image-src="assets/images/services/one-background.jpg">
+        <div class="overlay" data-bg-color="#282835"></div>
         <div class="container">
-            <div class="logreg-box">
-                <div class="form-box login">
-                    <form action="#">
-                        <h2>SIGN UP</h2>
 
-                        <div class="student-label">estudante</div>
+        </div>
+    </div>
 
-                        <div class="input-box">
-                            <span class="icon"><i class='bx bxs-envelope'></i></span>
-                            <input type="text" id="nome">
-                            <label>Nome</label>
-                        </div>
+    <div>
+        <h1>Results Page</h1>
+        <div id="resultContainer">
+            <!-- A tabela de resultados será exibida aqui -->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Universidade</th>
+                        <th>Curso</th>
+                        <th>Tipo de Programa</th>
+                        <th>Universidade de destino</th>
+                        <th>Pais Destino </th>
+                        <th>Cidade Destino </th>
+                        <th>Cursos</th>
+                        <th>Vagas</th>
+                        <th>Media</th>
+                        <!-- Adicione mais colunas conforme necessário -->
+                    </tr>
+                </thead>
+                <tbody id="resultTableBody">
+                    <!-- O conteúdo da tabela será preenchido dinamicamente aqui -->
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-                        <div class="input-box">
-                            <span class="icon"><i class='bx bxs-lock-alt'></i></span>
-                            <input type="email" id="mail">
-                            <label>Email</label>
-                        </div>
-
-                        <div class="input-box">
-                            <span class="icon"><i class='bx bxs-lock-alt'></i></span>
-                            <input type="password" id="pass">
-                            <label>Password</label>
-                        </div>
-
-                        <div class="input-box">
-                            <span class="icon"><i class='bx bxs-lock-alt'></i></span>
-                            <select id="uni" required></select>
-                            <label>Universidade</label>
-                        </div>
-
-
-                        <div class="input-box">
-                            <span class="icon"><i class='bx bxs-lock-alt'></i></span>
-                            <input type="text" id="curso">
-                            <label>Curso</label>
-                        </div>
-
-                        <div class="button-container">
-                            <button type="button" class="btn" onclick="register()">CONNECT</button>
-                        </div>
-
-                        <div class="login-register">
-                            <p><a href="forgot.html">Forgot password?</a></p>
-                        </div>
-                    </form>
-                </div>
-            </div>
-    </section>
-
-    <!-- Footer -->
     <footer class="footer-area">
         <div class="container">
             <div class="footer-top">
                 <div class="row">
                     <div class="col-lg-2 col-lg-5">
-                        <aside class="footer-widget widget_about">
+                        <aside class="footer-widget widget_about" data-wow-delay="0.1s">
                             <a href="index.html" class="f_logo">
                                 <img src="imagens\nomelogo.png" alt="logo">
                             </a>
@@ -173,16 +157,15 @@
                     </div>
                     <div class="col-lg-2 col-lg-7">
                         <aside class="footer-widget widget_navigate">
-                            <h4 class="f-title"> Navegação </h4>
+                            <h4 class="f-title">Navegação</h4>
                             <ul class="footer-navigation">
                                 <li>
-                                    <a href="index.html"><i class="fa fa-angle-right" aria-hidden="true"></i>
-                                        Home
+                                    <a href="index.html"><i class="fa fa-angle-right" aria-hidden="true"></i> Home
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="about-us.html"><i class="fa fa-angle-right" aria-hidden="true"></i>
-                                        About Us
+                                    <a href="about-us.html"><i class="fa fa-angle-right" aria-hidden="true"></i> About
+                                        Us
                                     </a>
                                 </li>
                                 <li>
@@ -196,8 +179,8 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="contact.html"><i class="fa fa-angle-right" aria-hidden="true"></i>
-                                        Sign In
+                                    <a href="contact.html"><i class="fa fa-angle-right" aria-hidden="true"></i> Sign
+                                        In
                                     </a>
                                 </li>
                             </ul>
@@ -206,56 +189,12 @@
                 </div>
             </div>
             <div class="footer-copyright">
-                ©2023 <a href="index.html"> easyerasmus </a> All rights reserved.
+                ©2023 <a href="index.html">easyerasmus</a> All rights reserved.
             </div>
         </div>
     </footer>
 
-    <script>
-
-        async function listarUniversidades() {
-            try {
-                const response = await fetch('/listar-universidades');
-                const data = await response.json();
-                return data.universidades;
-            } catch (error) {
-                console.error('Erro ao obter universidades:', error);
-                throw error;
-            }
-        }
-
-        async function preencherDropdownUniversidades() {
-            let uniDropdown = document.getElementById('uni');
-            try {
-                const response = await fetch('/api/user/listar-universidades');
-                const data = await response.json();
-                const universidades = data.universidades;
-
-                uniDropdown.innerHTML = "";
-
-                for (let i = 0; i < universidades.length; i++) {
-                    let option = document.createElement("option");
-                    option.value = universidades[i];
-                    option.text = universidades[i];
-                    uniDropdown.add(option);
-                }
-            } catch (error) {
-                console.error('Erro ao preencher dropdown de universidades:', error);
-            }
-        }
-
-
-        document.addEventListener('DOMContentLoaded', async function () {
-            await preencherDropdownUniversidades();
-            const registerButton = document.getElementById('registerButton');
-
-            registerButton.addEventListener('click', async function (e) {
-                e.preventDefault();
-                await register();
-            });
-        });
-
-    </script>
+  
 </body>
 
 </html>

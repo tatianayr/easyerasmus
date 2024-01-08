@@ -35,8 +35,8 @@
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul class="navbar-nav menu ms-lg-auto">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="index.html" role="button"
-                                            aria-haspopup="true" aria-expanded="false">
+                                        <a class="nav-link" href="index.html" role="button" aria-haspopup="true"
+                                            aria-expanded="false">
                                             Home
                                         </a>
                                     </li>
@@ -49,8 +49,8 @@
                                     </li>
 
                                     <li class="nav-item">
-                                        <a class="nav-link" href="features.html" role="button"
-                                            aria-haspopup="true" aria-expanded="false">
+                                        <a class="nav-link" href="features.html" role="button" aria-haspopup="true"
+                                            aria-expanded="false">
                                             Features
                                         </a>
                                     </li>
@@ -94,7 +94,7 @@
         <div class="overlay" data-bg-color="#282835"></div>
         <div class="container">
             <div class="titulo-content">
-            <h2 class="titulo-title">Adicionar programa</h2>
+                <h2 class="titulo-title">Adicionar programa</h2>
             </div>
         </div>
     </div>
@@ -104,7 +104,8 @@
         <div class="container">
             <div class="row justify-content-center align-items-center">
                 <div class="col-md-7">
-                    <form action="script" method="POST" id="contact_form" class="contact-form-box" data-wow-delay="0.2s">
+                    <form action="script" method="POST" id="contact_form" class="contact-form-box"
+                        data-wow-delay="0.2s">
                         <div class="row">
                             <div class="col-md-6">
                                 <input type="text" name="prog_tipo" id="prog_tipo" class="form-control"
@@ -122,7 +123,7 @@
                                 <input type="text" name="prog_cid" id="prog_cid" class="form-control"
                                     placeholder="Cidade">
                             </div>
-                            
+
                             <div class="col-lg-12 text-center">
                                 <button type="button" class="btn" onclick="enviarPrograma()">NEXT -></button>
                                 <div id="mail_success" class="success">Enviada!.</div>
@@ -198,55 +199,64 @@
     </footer>
 
     <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const cursoId = getCursoIdFromURL();
-    console.log("ID do curso:", cursoId);
-});
-
-async function enviarPrograma() {
-    const prog_tipo = document.getElementById("prog_tipo").value;
-    const prog_uni = document.getElementById("prog_uni").value;
-    const prog_pais = document.getElementById("prog_pais").value;
-    const prog_cid = document.getElementById("prog_cid").value;
-
-    try {
-        const token = localStorage.getItem("token");
-
-        const response = await fetch("/api/programa/upload/:cursoId", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`,
-            },
-            body: JSON.stringify({
-                prog_tipo,
-                prog_uni,
-                prog_pais,
-                prog_cid,
-                cursoId: getCursoIdFromURL(), 
-            }),
+        document.addEventListener('DOMContentLoaded', function () {
+            const cursoId = getCursoIdFromURL();
+            console.log("ID do curso:", cursoId);
         });
 
-        if (response.ok) {
-            const data = await response.json();
-            alert(data.message);
-            document.getElementById("contact_form").reset();
-            console.log("Redirecionando para oferta.html");
-            window.location.href = `oferta.html?progId=${data.progId}&cursoId=${getCursoIdFromURL()}`;
-        } else {
-            alert("Erro ao fazer o upload do programa.");
-        }
-    } catch (error) {
-        console.error("Erro:", error);
-    }
-}
+        async function enviarPrograma() {
+            const prog_tipo = document.getElementById("prog_tipo").value;
+            const prog_uni = document.getElementById("prog_uni").value;
+            const prog_pais = document.getElementById("prog_pais").value;
+            const prog_cid = document.getElementById("prog_cid").value;
 
-function getCursoIdFromURL() {
-    const urlParams = new URLSearchParams(window.location.search);
-        const cursoId = urlParams.get('cursoId');
-    console.log("Curso ID from URL:", cursoId);
-    return cursoId;
-}
+            const cursoId = getCursoIdFromURL();
+            console.log("Curso ID para enviarPrograma:", cursoId);
+
+            try {
+                const cursoId = await getCursoIdFromURL();
+                console.log("curso ID:", cursoId);
+
+                const response = await fetch(`/api/programa/upload/${cursoId}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+
+                    },
+                    body: JSON.stringify({
+                        prog_tipo,
+                        prog_uni,
+                        prog_pais,
+                        prog_cid,
+
+                    }),
+                });
+
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log("Resposta do servidor:", data);
+                    alert(data.message);
+                    document.getElementById("contact_form").reset();
+                    console.log("Redirecionando para oferta.html");
+                    window.location.href = `oferta.html?progId=${data.progId}`;
+                } else {
+                    alert("Erro ao fazer o upload do programa.");
+                }
+
+            } catch (error) {
+                console.error("Erro:", error);
+            }
+        }
+
+        function getCursoIdFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const cursoId = urlParams.get('cursoId');
+            console.log("Curso ID from URL:", cursoId);
+            return cursoId;
+        }
+
+
 
 
     </script>

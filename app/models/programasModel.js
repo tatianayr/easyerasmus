@@ -1,5 +1,4 @@
 const pool = require("../config/database");
-
 class Programa {
     constructor(tipo, uni, pais, cid, adminId) {
         this.tipo = tipo;
@@ -11,30 +10,73 @@ class Programa {
         this.ofertaId = null;
         this.cursoId = null;
     }
-    async upload() {
-        const insertProgramQuery = "INSERT INTO programa (prog_tipo, prog_uni, prog_pais, prog_cid, curso_id) VALUES ($1, $2, $3, $4, $5) RETURNING prog_id";
-        const programValues = [this.tipo, this.uni, this.pais, this.cid, this.cursoId];
-
+    async resultado(adminId) {
+        const query = `
+            SELECT
+                a.admin_id,
+                a.admin_mail,
+                a.admin_uni,
+                c.curso_id,
+                c.curso_nome,
+                p.prog_id,
+                p.prog_tipo,
+                p.prog_uni,
+                p.prog_pais,
+                p.prog_cid,
+                o.of_id,
+                o.of_curso,
+                o.of_vaga,
+                r.req_id,
+                r.req_media
+            FROM
+                administrador a
+            LEFT JOIN curso c ON a.admin_id = c.admin_id
+            LEFT JOIN programa p ON c.curso_id = p.curso_id
+            LEFT JOIN oferta o ON p.prog_id = o.prog_id
+            LEFT JOIN requisitos r ON o.of_id = r.of_id
+            WHERE
+                a.admin_id = $1;
+        `;
+        const values = [adminId];
+    
         try {
+            const result = await pool.query(query, values);
+            return result.rows;
+        } catch (error) {
+            console.error('Erro ao executar a consulta:', error);
+            throw error;
+        }
+    }
+    
+
+
+
+    async upload(prog_tipo, prog_uni, prog_pais, prog_cid) {
+        const insertProgramQuery = "INSERT INTO programa (prog_tipo, prog_uni, prog_pais, prog_cid, curso_id, admin_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING prog_id";
+        const programValues = [prog_tipo, prog_uni, prog_pais, prog_cid, this.cursoId, this.adminId];
+    
+        try {
+            console.log("Valores a serem inseridos:", programValues);
+    
             const result = await pool.query(insertProgramQuery, programValues);
-
-            this.progId = result.rows[0].prog_id;
-
-            console.log("Programa adicionado com sucesso. progId:", this.progId);
-            return "Programa adicionado com sucesso";
+    
+            const progId = result.rows[0].prog_id;
+    
+            console.log("Programa adicionado com sucesso. progId:", progId);
+            return progId;
         } catch (error) {
             console.log("Erro ao inserir na base de dados:", error);
             throw error;
         }
     }
-
+    
     async adicionarOferta(of_curso, of_vaga) {
         if (!this.progId) {
             throw new Error("ID do programa não disponível. Execute o método 'upload' primeiro.");
         }
 
-        const insertOfertaQuery = "INSERT INTO oferta (of_curso, of_vaga, prog_id) VALUES ($1, $2, $3) RETURNING of_id";
-        const ofertaValues = [of_curso, of_vaga, this.progId];
+        const insertOfertaQuery = "INSERT INTO oferta (of_curso, of_vaga, prog_id, admin_id) VALUES ($1, $2, $3, $4) RETURNING of_id";
+        const ofertaValues = [of_curso, of_vaga, this.progId, this.adminId];
 
         try {
             const result = await pool.query(insertOfertaQuery, ofertaValues);

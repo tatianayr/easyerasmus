@@ -22,9 +22,7 @@ async function enviarPrograma() {
             const data = await response.json();
             alert(data.message);
             document.getElementById("contact_form").reset();
-            
-            localStorage.setItem('progId', data.progId);
-            
+
             window.location.href = `oferta.html?progId=${data.progId}`;
         } else {
             alert("Erro ao fazer upload do programa.");
@@ -34,9 +32,7 @@ async function enviarPrograma() {
     }
 }
 
-async function adicionarOfertaAoPrograma() {
-    const progId = localStorage.getItem('progId');
-
+async function adicionarOfertaAoPrograma(of_curso, of_vaga) {
     try {
         const response = await fetch(`/api/programa/adicionar-oferta/${progId}`, {
             method: "POST",
@@ -44,12 +40,15 @@ async function adicionarOfertaAoPrograma() {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                of_curso,
+                of_vaga,
             }),
         });
 
         if (response.ok) {
             const data = await response.json();
             alert(data.message);
+            window.location.href = `/requisitos.html?ofertaId=${data.ofertaId}`;
         } else {
             alert("Erro ao adicionar oferta ao programa.");
         }
@@ -58,9 +57,8 @@ async function adicionarOfertaAoPrograma() {
     }
 }
 
-async function adicionarRequisitoAoPrograma() {
-    const ofertaId = localStorage.getItem('ofertaId');
 
+async function adicionarRequisitosAoPrograma(ofertaId, req_curso, req_media) {
     try {
         const response = await fetch(`/api/programa/adicionar-requisitos/${ofertaId}`, {
             method: "POST",
@@ -68,6 +66,8 @@ async function adicionarRequisitoAoPrograma() {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                req_curso,
+                req_media,
             }),
         });
 
@@ -75,16 +75,14 @@ async function adicionarRequisitoAoPrograma() {
             const data = await response.json();
             alert(data.message);
         } else {
-            alert("Erro ao adicionar requisito ao programa.");
+            alert("Erro ao adicionar requisitos ao programa.");
         }
     } catch (error) {
         console.error("Erro:", error);
     }
 }
 
-async function adicionarRequisitoAOferta() {
-    const ofertaId = localStorage.getItem('ofertaId');
-
+async function adicionarRequisitoAOferta(ofertaId, req_curso, req_media) {
     try {
         const response = await fetch(`/api/programa/adicionar-requisitos/${ofertaId}`, {
             method: "POST",
@@ -92,6 +90,8 @@ async function adicionarRequisitoAOferta() {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                req_curso,
+                req_media,
             }),
         });
 

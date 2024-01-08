@@ -7,23 +7,60 @@ const pool = require("../config/database");
 
 router.use(express.json());
 
+router.get('/resultado/:adminId', auth.verifyAuth, async (req, res) => {
+    try {
+        const adminId = req.params.adminId;
+
+        if (!adminId) {
+            return res.status(400).json({ error: "ID do administrador inválido." });
+        }
+
+        const programa = new Programa(null, null, null, null, adminId);
+        const resultado = await programa.resultado(adminId);
+
+        res.json({ resultado });
+    } catch (error) {
+        console.error("Erro ao obter resultado:", error);
+        res.status(500).json({ error: "Erro ao obter resultado." });
+    }
+});
+
 router.post('/upload/:cursoId', auth.verifyAuth, async function (req, res) {
     try {
+        const adminId = req.body.adminId;
         const cursoId = req.params.cursoId;
         const { prog_tipo, prog_uni, prog_pais, prog_cid } = req.body;
-        console.log("Dados do programa:", prog_tipo, prog_uni, prog_pais, prog_cid);
+        if (!cursoId) {
+            return res.status(400).json({ error: "ID do curso inválido." });
+        }
+        const cursoIdNumber = parseInt(cursoId, 10);
 
-        const novoPrograma = new Programa(prog_tipo, prog_uni, prog_pais, prog_cid, cursoId);
-        console.log("novoPrograma:", novoPrograma);
-        const message = await novoPrograma.upload();
+        if (isNaN(cursoIdNumber)) {
+          return res.status(400).json({ error: "ID do curso inválido." });
+        }
+        
+        const cursoExistente = await buscarCursoIdPorId(cursoIdNumber);
+        
+        if (!cursoExistente) {
+          return res.status(404).json({ error: "Curso não encontrado." });
+        }
+        
 
-        res.status(201).json({ message, progId: novoPrograma.progId });
+        if (!cursoExistente) {
+            return res.status(404).json({ error: "Curso não encontrado." });
+        }
+        const programa = new Programa(null, null, null, null, null, adminId);
+        programa.cursoId = cursoId;
+
+        const progId= await programa.upload(prog_tipo, prog_uni, prog_pais, prog_cid);
+        res.status(201).json({ message: "Programa adicionada com sucesso", progId });
 
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Erro ao fazer upload do programa." });
     }
 });
+
 
 router.post('/adicionar-oferta/:progId', auth.verifyAuth, async function (req, res) {
     try {
