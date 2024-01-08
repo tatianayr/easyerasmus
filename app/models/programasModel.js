@@ -38,7 +38,7 @@ class Programa {
                 a.admin_id = $1;
         `;
         const values = [adminId];
-    
+
         try {
             const result = await pool.query(query, values);
             return result.rows;
@@ -47,21 +47,21 @@ class Programa {
             throw error;
         }
     }
-    
+
 
 
 
     async upload(prog_tipo, prog_uni, prog_pais, prog_cid) {
         const insertProgramQuery = "INSERT INTO programa (prog_tipo, prog_uni, prog_pais, prog_cid, curso_id, admin_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING prog_id";
         const programValues = [prog_tipo, prog_uni, prog_pais, prog_cid, this.cursoId, this.adminId];
-    
+
         try {
             console.log("Valores a serem inseridos:", programValues);
-    
+
             const result = await pool.query(insertProgramQuery, programValues);
-    
+
             const progId = result.rows[0].prog_id;
-    
+
             console.log("Programa adicionado com sucesso. progId:", progId);
             return progId;
         } catch (error) {
@@ -69,7 +69,7 @@ class Programa {
             throw error;
         }
     }
-    
+
     async adicionarOferta(of_curso, of_vaga) {
         if (!this.progId) {
             throw new Error("ID do programa não disponível. Execute o método 'upload' primeiro.");
@@ -96,7 +96,7 @@ class Programa {
             VALUES ($1, $2, $3)
         `;
         const values = [req_media, this.ofertaId, cursoId];
-    
+
         try {
             const result = await pool.query(query, values);
             return "Requisitos adicionados com sucesso.";
@@ -105,7 +105,82 @@ class Programa {
             throw error;
         }
     }
+
+    async updateResultado(adminId, novosDados) {
+        const client = await pool.connect();
     
+        try {
+            await client.query('BEGIN');
+    
+            // Atualizar tabela programa
+            const updateProgramaQuery = `
+                UPDATE programa
+                SET
+                    prog_tipo = $1,
+                    prog_uni = $2,
+                    prog_pais = $3,
+                    prog_cid = $4
+                WHERE
+                    programa.prog_id = $5;
+            `;
+    
+            const programaValues = [
+                novosDados.prog_tipo,
+                novosDados.prog_uni,
+                novosDados.prog_pais,
+                novosDados.prog_cid,
+                novosDados.prog_id
+            ];
+    
+            await client.query(updateProgramaQuery, programaValues);
+    
+            // Atualizar tabela oferta
+            const updateOfertaQuery = `
+                UPDATE oferta
+                SET
+                    of_curso = $1,
+                    of_vaga = $2
+                WHERE
+                    oferta.of_id = $3;
+            `;
+    
+            const ofertaValues = [
+                novosDados.of_curso,
+                novosDados.of_vaga,
+                novosDados.of_id
+            ];
+    
+            await client.query(updateOfertaQuery, ofertaValues);
+    
+            // Atualizar tabela requisitos
+            const updateRequisitosQuery = `
+                UPDATE requisitos
+                SET
+                    req_media = $1
+                WHERE
+                    requisitos.req_id = $2;
+            `;
+    
+            const requisitosValues = [
+                novosDados.req_media,
+                novosDados.req_id
+            ];
+    
+            await client.query(updateRequisitosQuery, requisitosValues);
+    
+            await client.query('COMMIT');
+            console.log("Dados atualizados com sucesso.");
+            return "Dados atualizados com sucesso.";
+        } catch (error) {
+            await client.query('ROLLBACK');
+            console.error('Erro ao executar a atualização:', error);
+            throw error;
+        } finally {
+            client.release();
+        }
+    }
+    
+
 
     async listarProgramas() {
         const listarProgramasQuery = `

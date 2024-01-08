@@ -6,6 +6,29 @@ const Curso = require("../models/programasModel");
 const pool = require("../config/database");
 
 router.use(express.json());
+router.put('/atualizar-resultado/:adminId', async (req, res) => {
+    try {
+        const adminId = req.params.adminId;
+
+        if (!adminId) {
+            return res.status(400).json({ error: "ID do administrador inválido." });
+        }
+
+        const novosDados = req.body; // Certifique-se de enviar os dados corretos para atualização
+
+        const programa = new Programa(null, null, null, null, adminId);
+
+        const resultado = await programa.updateResultado(adminId, novosDados);
+
+        res.json({ message: resultado });
+    } catch (error) {
+        console.error("Erro ao atualizar resultado:", error);
+        res.status(500).json({ error: "Erro ao atualizar resultado." });
+    }
+});
+
+
+
 
 router.get('/resultado/:adminId', auth.verifyAuth, async (req, res) => {
     try {
@@ -116,6 +139,9 @@ router.post('/adicionar-requisitos/:ofertaId', auth.verifyAuth, async function (
         res.status(500).json({ error: "Erro ao adicionar requisitos à oferta." });
     }
 });
+
+
+
 async function buscarCursoIdPorId(cursoId) {
     const query = 'SELECT curso_id FROM curso WHERE curso_id = $1';
     const values = [cursoId];

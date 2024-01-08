@@ -19,14 +19,13 @@
     <script src="js/result.js"></script>
     <title>Requisitos</title>
     <style>
-        /* Adicione este bloco de estilo para afastar a navbar e o footer da tabela na página de resultados */
 
         .navbar-wrapper {
-            margin-bottom: 200px; /* Ajuste conforme necessário */
+            margin-bottom: 200px;
         }
 
         .footer-area {
-            margin-top: 200px; /* Ajuste conforme necessário */
+            margin-top: 200px; 
         }
     </style>
 </head>
@@ -110,7 +109,6 @@
     <div>
         <h1>Results Page</h1>
         <div id="resultContainer">
-            <!-- A tabela de resultados será exibida aqui -->
             <table class="table">
                 <thead>
                     <tr>
@@ -123,15 +121,27 @@
                         <th>Cursos</th>
                         <th>Vagas</th>
                         <th>Media</th>
-                        <!-- Adicione mais colunas conforme necessário -->
                     </tr>
                 </thead>
                 <tbody id="resultTableBody">
-                    <!-- O conteúdo da tabela será preenchido dinamicamente aqui -->
                 </tbody>
             </table>
         </div>
     </div>
+
+    <form id="edicaoForm">
+        <input type="hidden" name="prog_id">
+        <input type="text" name="prog_tipo" placeholder="Tipo de Programa">
+        <input type="text" name="prog_uni" placeholder="Universidade de Destino">
+        <input type="text" name="prog_pais" placeholder="Pais Destino">
+        <input type="text" name="prog_cid" placeholder="Cidade Destino">
+        <input type="hidden" name="of_id">
+        <input type="text" name="of_curso" placeholder="Cursos">
+        <input type="text" name="of_vaga" placeholder="Vagas">
+        <input type="hidden" name="req_id">
+        <input type="text" name="req_media" placeholder="Media">
+        <button type="button" onclick="enviarAtualizacao()">Atualizar</button>
+    </form>
 
     <footer class="footer-area">
         <div class="container">
@@ -193,7 +203,46 @@
             </div>
         </div>
     </footer>
+<script>
+    async function enviarAtualizacao() {
+    const adminId = obterAdminIdDoLocalStorage();
 
+    if (adminId) {
+        const form = document.getElementById('edicaoForm');
+        const formData = new FormData(form);
+
+        // Remove campos vazios do formData
+        for (const [key, value] of formData.entries()) {
+            if (value === '') {
+                formData.delete(key);
+            }
+        }
+
+        try {
+            const response = await fetch(`/api/programa/atualizar-resultado/${adminId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(Object.fromEntries(formData)),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                console.log("Atualização bem-sucedida:", data.message);
+                // Chame a função para obter e exibir resultados novamente após a atualização
+                obterEExibirResultados();
+            } else {
+                console.error("Erro na atualização:", data.error);
+            }
+        } catch (error) {
+            console.error("Erro na requisição:", error);
+        }
+    }
+}
+
+</script>
   
 </body>
 
