@@ -26,6 +26,7 @@ async function requestRegister(nome, mail, pass, uni) {
 async function requestLogin(user) {
     const est_mail = document.getElementById("est_mail").value;
     const est_pass = document.getElementById("est_pass").value;
+
     try {
         console.log('Requesting login for:', user);
         const response = await fetch('/api/user/auth', {
@@ -43,12 +44,18 @@ async function requestLogin(user) {
 
         console.log('Login response:', response);
 
-        return { status: response.status };
+        if (response.ok) {
+            const data = await response.json();
+            return { status: response.status, data };
+        } else {
+            return { status: response.status, data: null };
+        }
     } catch (err) {
         console.log(err);
-        return { status: 500 };
+        return { status: 500, data: null };
     }
 }
+
 
 
 
@@ -78,7 +85,6 @@ async function register() {
         msgDOM.textContent = 'An error occurred';
     }
 }
-
 async function login() {
     let msgDOM = document.getElementById('msg');
 
@@ -96,7 +102,7 @@ async function login() {
 
             if (res.status === 200) {
                 msgDOM.textContent = 'Successful Login!';
-                const estId = res.estId || '';
+                const estId = res.data.estId || '';
                 window.location.href = `cursos-stu.html?estId=${estId}`;
             } else {
                 msgDOM.textContent = 'Login failed. Check your credentials.';
@@ -109,6 +115,7 @@ async function login() {
         msgDOM.textContent = 'An error occurred';
     }
 }
+
 
 document.addEventListener('DOMContentLoaded', function () {
     const registerButton = document.getElementById('registerButton');

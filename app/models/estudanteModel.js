@@ -80,7 +80,6 @@ class User {
             }
     
             const dbUser = dbResult.rows[0];
-    
             const isPassValid = await bcrypt.compare(user.pass, dbUser.est_pass);
     
             if (!isPassValid) {
@@ -99,7 +98,9 @@ class User {
         }
     }
     
-    
+    async login(){
+        
+    }
 
     async listarUniversidades() {
         const query = 'SELECT DISTINCT admin_uni FROM administrador;';

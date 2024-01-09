@@ -19,6 +19,24 @@
     <script src="js/cursoRequest.js"></script>
     <script src="js/userRequests.js"></script>
     <title>CursoSTU</title>
+    <style>
+        body {
+            padding-top: 200px; /* Ajuste conforme necessário para deixar espaço suficiente para a navbar */
+            margin-bottom: 200px; /* Ajuste conforme necessário para deixar espaço suficiente para o footer */
+        }
+        .footer-area {
+            margin-top: 60px; /* ou qualquer valor desejado */
+        }
+
+        .footer-area .container {
+            padding-top: 60px; /* ou qualquer valor desejado */
+        }
+
+        .main-content {
+            margin-bottom: 60px; /* ou qualquer valor desejado */
+        }
+        /* Adicione estilos personalizados conforme necessário */
+    </style>
 </head>
 
 <body data-scroll-animation="true">
@@ -175,10 +193,12 @@
 
    <!-- cursos-stu.html -->
 <script>
-  // Função para listar cursos
+
 async function listarCursoSTU(estId) {
     try {
-        const response = await fetch(`/api/user/listar-cursostu/${estId}`);
+        const response = await fetch(`/api/user/listar-cursostu/${estId}`, {
+            method: 'GET', // Pode ser omitido, pois GET é o padrão
+        });
         const data = await response.json();
         return data.cursos;
     } catch (error) {
@@ -187,22 +207,14 @@ async function listarCursoSTU(estId) {
     }
 }
 
-// Função para obter o estId de alguma forma (pode ser da URL, formulário, etc.)
 function obterEstIdDeAlgumaForma() {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get('estId') || '';
 }
-
-// Agora, onde você precisar listar os cursos, faça algo como:
 window.addEventListener('load', async function () {
     try {
-        // Obter o estId de alguma forma (URL, formulário, etc.)
         const estId = obterEstIdDeAlgumaForma();
-
-        // Chamar a função listarCursoSTU com o estId
         const cursos = await listarCursoSTU(estId);
-
-        // Restante do seu código...
     } catch (error) {
         console.error('Erro ao obter cursos do aluno:', error);
     }
