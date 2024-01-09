@@ -144,6 +144,18 @@ router.get('/listar-cursostu/:estId', async function (req, res) {
     }
 });
 
+router.get('/listar-opcoes/:cursoNome', async function (req, res) {
+    try {
+        const cursoNome = req.params.cursoNome; // Corrected to use req.params
+        const userInstance = new User();
+        const opcoes = await userInstance.listarOpcoes(cursoNome);
+        res.status(200).json({ opcoes });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Erro ao listar cursos do aluno." });
+    }
+});
+
 
 
 

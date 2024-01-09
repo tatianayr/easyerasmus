@@ -137,7 +137,9 @@ async function listarUniversidades() {
     }
 }
 
-async function listarCursoSTU() {
+
+
+async function listarCursoStu() {
     try {
         const response = await fetch(`/api/user/listar-cursostu/${estId}`);
         const data = await response.json();
@@ -150,7 +152,7 @@ async function listarCursoSTU() {
 
 async function listarOpcoes() {
     try {
-        const response = await fetch(`/api/user/listar-opcoes/${estId}`);
+        const response = await fetch(`/api/user/listar-opcoes/${cursoNome}`);
         const data = await response.json();
         return data.opcoes;
     } catch (error) {

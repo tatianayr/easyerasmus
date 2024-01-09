@@ -91,9 +91,8 @@
             </div>
         </div>
     </div>
+    <!-- Nav Bar  -->
 
-
-    <!-- Texto 1  -->
     <section class="banner_area">
         <div class="container">
             <div class="table-container">
@@ -110,33 +109,13 @@
                         </tr>
                     </thead>
 
-                    <tbody id="table-body">
+                    <tbody id="tbestudante">
                         <!-- Dados serão preenchidos dinamicamente pelo script -->
                     </tbody>
                 </table>
             </div>
         </div>
     </section>
-
-
-    <script>
-        async function listarOpcoes() {
-            try {
-                const response = await fetch(`/api/user/listar-opcoes/${estId}`);
-                const data = await response.json();
-                return data.opcoes;
-            } catch (error) {
-                console.error('Erro ao obter opcoes do aluno:', error);
-                throw error;
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", () => {
-            listarOpcoes();
-        });
-    </script>
-
-
 
     <!-- Footer -->
     <footer class="footer-area">
@@ -200,6 +179,55 @@
             </div>
         </div>
     </footer>
+
+    <!-- ... Seu HTML até o script ... -->
+
+    <script>
+        async function listarOpcoes(cursoNome) {
+            try {
+                const response = await fetch(`/api/user/listar-opcoes/${cursoNome}`);
+                const data = await response.json();
+                return data.opcoes;
+            } catch (error) {
+                console.error('Erro ao obter opcoes do aluno:', error);
+                throw error;
+            }
+        }
+
+        function exibirOpcoes(opcoes) {
+            
+            console.log("Opções recebidas:", opcoes);
+
+            const tableBody = document.getElementById('tbestudante');
+            tableBody.innerHTML = '';
+
+            opcoes.forEach(opcao => {
+                const row = tableBody.insertRow();
+
+                const cell1 = row.insertCell(0);
+                cell1.textContent = opcao.prog_pais;
+
+                const cell2 = row.insertCell(1);
+                cell2.textContent = opcao.prog_tipo;
+
+                const cell3 = row.insertCell(2);
+                cell3.textContent = opcao.prog_uni;
+
+                const cell4 = row.insertCell(3);
+                cell4.textContent = opcao.prog_cid;
+
+                const cell5 = row.insertCell(4);
+                cell5.textContent = opcao.curso_nome;
+
+                const cell6 = row.insertCell(5);
+                cell6.textContent = opcao.of_vaga;
+
+                const cell7 = row.insertCell(6);
+                cell7.textContent = opcao.req_media;
+            });
+        }
+
+    </script>
 </body>
 
 </html>
