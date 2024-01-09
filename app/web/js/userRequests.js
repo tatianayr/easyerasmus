@@ -148,6 +148,16 @@ async function listarCursoSTU() {
     }
 }
 
+async function listarOpcoes() {
+    try {
+        const response = await fetch(`/api/user/listar-opcoes/${estId}`);
+        const data = await response.json();
+        return data.opcoes;
+    } catch (error) {
+        console.error('Erro ao obter opcoes do aluno:', error);
+        throw error;
+    }
+}
 async function preencherDropdownUniversidades() {
     let uniDropdown = document.getElementById('uni');
     try {

@@ -264,4 +264,16 @@ async function buscarProgramaPorId(programId) {
     return result.rows[0];
 }
 
+router.get('/listar-opcoes/:estId', async function (req, res) {
+    try {
+        const estId = req.params.estId; // Corrected to use req.params
+        const userInstance = new User();
+        const opcoes = await userInstance.listarOpcoes(estId);
+        res.status(200).json({ opcoes });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Erro ao listar cursos do aluno." });
+    }
+});
+
 module.exports = router;

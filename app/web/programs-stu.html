@@ -9,46 +9,22 @@
     <link rel="stylesheet" href="bibliotecas\bootstrap\css\bootstrap.min.css" />
     <link rel="stylesheet" href="css\font-awesome.min.css" />
     <link rel="stylesheet" href="css\style.css" />
+    <link rel="stylesheet" href="css\style.css" />
+
     <script src="app\index.js"></script>
     <script src="\js\jquery-3.6.0.min.js"></script>
     <script src="bibliotecas\bootstrap\js\popper.min.js"></script>
     <script src="bibliotecas\bootstrap\js\bootstrap.min.js"></script>
     <script src="js\slider.js"></script>
     <script src="js\main.js"></script>
-    <script src="js/programaRequest.js"></script>
-    <script src="js/cursoRequest.js"></script>
     <script src="js/userRequests.js"></script>
-    <title>CursoSTU</title>
-    <style>
-        body {
-            padding-top: 200px;
-            /* Ajuste conforme necessário para deixar espaço suficiente para a navbar */
-            margin-bottom: 200px;
-            /* Ajuste conforme necessário para deixar espaço suficiente para o footer */
-        }
 
-        .footer-area {
-            margin-top: 60px;
-            /* ou qualquer valor desejado */
-        }
-
-        .footer-area .container {
-            padding-top: 60px;
-            /* ou qualquer valor desejado */
-        }
-
-        .main-content {
-            margin-bottom: 60px;
-            /* ou qualquer valor desejado */
-        }
-
-        /* Adicione estilos personalizados conforme necessário */
-    </style>
+    <title>Programs</title>
 </head>
 
 <body data-scroll-animation="true">
 
-    <!-- Nav Bar -->
+    <!-- Nav Bar  -->
     <div class="header-wrapper">
         <div class="navbar-wrapper">
             <div class="navbar-sticky header-2 header-transition set-sticky">
@@ -104,7 +80,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item ab-h-btn">
-                                    <a class="nav-link about-h-btn" href="signup-stu.html">
+                                    <a class="nav-link about-h-btn" href="signup-uni.html">
                                         <i class="fa fa-university"></i>
                                     </a>
                                 </li>
@@ -116,47 +92,59 @@
         </div>
     </div>
 
-    <div class="titulo-area titulo-1" data-image-src="assets/images/services/one-background.jpg">
-        <div class="overlay" data-bg-color="#282835"></div>
-        <div class="container">
 
-        </div>
-    </div>
-    <!-- cursos-stu.html -->
+    <!-- Texto 1  -->
     <section class="banner_area">
         <div class="container">
-            <div class="row justify-content-center align-items-center">
-                <div class="col-md-4">
-                    <form action="script" method="GET" id="curso_form" class="contact-form-box" data-wow-delay="0.2s">
-                        <input type="hidden" name="estId" id="estIdInput" /> <!-- Adicione esta linha -->
-                        <div class="row">
-                            <div class="col-md-12">
-                                <select name="curso_nome" id="curso_nome" class="form-control">
-                                    <!-- Options will be dynamically filled via JavaScript -->
-                                </select>
-                            </div>
-                            <div class="col-md-12">
-                                <button id="submitButton" class="btn btn-primary">Submit</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+            <div class="table-container">
+                <table class="erasmus-table">
+                    <thead>
+                        <tr>
+                            <th>PAÍS</th>
+                            <th>PROGRAMA</th>
+                            <th>UNIVERSIDADE</th>
+                            <th>CIDADE</th>
+                            <th>CURSO</th>
+                            <th>VAGA</th>
+                            <th>MÉDIA</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="table-body">
+                        <!-- Dados serão preenchidos dinamicamente pelo script -->
+                    </tbody>
+                </table>
             </div>
         </div>
     </section>
 
 
+    <script>
+        async function listarOpcoes() {
+            try {
+                const response = await fetch(`/api/user/listar-opcoes/${estId}`);
+                const data = await response.json();
+                return data.opcoes;
+            } catch (error) {
+                console.error('Erro ao obter opcoes do aluno:', error);
+                throw error;
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            listarOpcoes();
+        });
+    </script>
 
 
 
-
-
+    <!-- Footer -->
     <footer class="footer-area">
         <div class="container">
             <div class="footer-top">
                 <div class="row">
                     <div class="col-lg-2 col-lg-5">
-                        <aside class="footer-widget widget_about" data-wow-delay="0.1s">
+                        <aside class="footer-widget widget_about">
                             <a href="index.html" class="f_logo">
                                 <img src="imagens\nomelogo.png" alt="logo">
                             </a>
@@ -175,15 +163,16 @@
                     </div>
                     <div class="col-lg-2 col-lg-7">
                         <aside class="footer-widget widget_navigate">
-                            <h4 class="f-title">Navegação</h4>
+                            <h4 class="f-title"> Navegação </h4>
                             <ul class="footer-navigation">
                                 <li>
-                                    <a href="index.html"><i class="fa fa-angle-right" aria-hidden="true"></i> Home
+                                    <a href="index.html"><i class="fa fa-angle-right" aria-hidden="true"></i>
+                                        Home
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="about-us.html"><i class="fa fa-angle-right" aria-hidden="true"></i> About
-                                        Us
+                                    <a href="about-us.html"><i class="fa fa-angle-right" aria-hidden="true"></i>
+                                        About Us
                                     </a>
                                 </li>
                                 <li>
@@ -197,8 +186,8 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="contact.html"><i class="fa fa-angle-right" aria-hidden="true"></i> Sign
-                                        In
+                                    <a href="contact.html"><i class="fa fa-angle-right" aria-hidden="true"></i>
+                                        Sign In
                                     </a>
                                 </li>
                             </ul>
@@ -207,59 +196,10 @@
                 </div>
             </div>
             <div class="footer-copyright">
-                ©2023 <a href="index.html">easyerasmus</a> All rights reserved.
+                ©2023 <a href="index.html"> easyerasmus </a> All rights reserved.
             </div>
         </div>
     </footer>
-
-    <!-- cursos-stu.html -->
-    <script>
-        async function listarCursoSTU(estId) {
-            try {
-                const response = await fetch(`/api/user/listar-cursostu/${estId}`, {
-                    method: 'GET',
-                });
-                const data = await response.json();
-                return data.cursos;
-            } catch (error) {
-                console.error('Erro ao obter cursos do aluno:', error);
-                throw error;
-            }
-        }
-
-        function obterEstIdDeAlgumaForma() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('estId') || '';
-        }
-
-        window.addEventListener('load', async function () {
-            try {
-                const estId = obterEstIdDeAlgumaForma();
-                const cursos = await listarCursoSTU(estId);
-
-                // Obtém a referência do elemento select
-                const selectCurso = document.getElementById('curso_nome');
-                console.log(selectCurso);
-
-                // Limpa quaisquer opções existentes no elemento select
-                selectCurso.innerHTML = '';
-
-                // Preenche o elemento select com as opções dos cursos
-                cursos.forEach(curso => {
-                    const option = document.createElement('option');
-                    option.text = curso; // Use the course name as both value and text
-                    selectCurso.appendChild(option);
-                });
-            } catch (error) {
-                console.error('Erro ao obter cursos do aluno:', error);
-            }
-        });
-    </script>
-
-
-
-
-    </script>
 </body>
 
 </html>

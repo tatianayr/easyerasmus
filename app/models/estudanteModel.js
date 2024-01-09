@@ -141,6 +141,18 @@ class User {
             return { status: 500, result: err };
         }
     }
+
+    async listarOpcoes(estId) {
+        const query = 'SELECT r.req_media, p.prog_uni, p.prog_tipo, p.prog_pais, p.prog_cid, o.of_vaga, o.of_curso FROM estudante e JOIN curso c ON e.curso_id = c.curso_id JOIN requisitos r ON c.curso_id = r.curso_id JOIN oferta o ON r.of_id = o.of_id JOIN programa p ON o.prog_id = p.prog_id WHERE e.est_id = $1'
+        try {
+            const result = await pool.query(query, [estId]);
+            const opcoes = result.rows;
+            return opcoes;
+        } catch (error) {
+            console.error('Erro ao listar opções para os alunos:', error);
+            throw error;
+        }
+    }
     
     }
 
