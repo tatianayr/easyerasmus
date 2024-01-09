@@ -150,7 +150,7 @@ async function listarCursoStu() {
     }
 }
 
-async function listarOpcoes() {
+async function listarOpcoes(cursoNome) {
     try {
         const response = await fetch(`/api/user/listar-opcoes/${cursoNome}`);
         const data = await response.json();
@@ -160,6 +160,7 @@ async function listarOpcoes() {
         throw error;
     }
 }
+
 async function preencherDropdownUniversidades() {
     let uniDropdown = document.getElementById('uni');
     try {

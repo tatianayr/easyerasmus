@@ -123,29 +123,29 @@
         </div>
     </div>
 
-<!-- cursos-stu.html -->
-<section class="banner_area">
-    <div class="container">
-        <div class="row justify-content-center align-items-center">
-            <div class="col-md-4">
-                <form action="script" method="GET" id="curso_form" class="contact-form-box" data-wow-delay="0.2s">
-                    <input type="hidden" name="estId" id="estIdInput" /> <!-- Adicione esta linha -->
-                    <div class="row">
-                        <div class="col-md-12">
-                            <select name="curso_nome" id="curso_nome" class="form-control">
-                                <!-- Options will be dynamically filled via JavaScript -->
-                            </select>
+    <!-- cursos-stu.html -->
+    <section class="banner_area">
+        <div class="container">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-md-4">
+                    <form action="script" method="GET" id="curso_form" class="contact-form-box" data-wow-delay="0.2s">
+                        <input type="hidden" name="estId" id="estIdInput" /> <!-- Adicione esta linha -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <select name="curso_nome" id="curso_nome" class="form-control">
+                                    <!-- Options will be dynamically filled via JavaScript -->
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <!-- Add a button to trigger the course listing -->
+                                <button id="listarCursosBtn" class="btn btn-primary">Listar Cursos</button>
+                            </div>
                         </div>
-                        <div class="col-md-12">
-                            <!-- Add a button to trigger the course listing -->
-                            <button id="listarCursosBtn" class="btn btn-primary">Listar Cursos</button>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
     <footer class="footer-area">
@@ -210,62 +210,59 @@
     </footer>
 
 
-<!-- cursos-stu.html -->
-<script>
-    async function listarCursoStu(estId) {
-        try {
-            const response = await fetch(`/api/user/listar-cursostu/${estId}`, {
-                method: 'GET',
-            });
-            const data = await response.json();
-            return data.cursos;
-        } catch (error) {
-            console.error('Erro ao obter cursos do aluno:', error);
-            throw error;
+    <!-- cursos-stu.html -->
+    <script>
+        async function listarCursoStu(estId) {
+            try {
+                const response = await fetch(`/api/user/listar-cursostu/${estId}`, {
+                    method: 'GET',
+                });
+                const data = await response.json();
+                return data.cursos;
+            } catch (error) {
+                console.error('Erro ao obter cursos do aluno:', error);
+                throw error;
+            }
         }
-    }
 
-    function obterEstIdDeAlgumaForma() {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get('estId') || '';
-    }
-
-    window.addEventListener('load', async function () {
-        try {
-            const estId = obterEstIdDeAlgumaForma();
-            const cursos = await listarCursoStu(estId);
-
-            // Obtém a referência do elemento select
-            const selectCurso = document.getElementById('curso_nome');
-            console.log(selectCurso);
-
-            // Limpa quaisquer opções existentes no elemento select
-            selectCurso.innerHTML = '';
-
-            // Preenche o elemento select com as opções dos cursos
-            cursos.forEach(curso => {
-                const option = document.createElement('option');
-                option.text = curso; // Use the course name as both value and text
-                selectCurso.appendChild(option);
-            });
-
-            // Adiciona um listener para o botão "Listar Cursos"
-            const listarCursosBtn = document.getElementById('listarCursosBtn');
-            listarCursosBtn.addEventListener('click', function (event) {
-                // Previne o comportamento padrão do formulário
-                event.preventDefault();
-
-                // Obtem o cursoId selecionado
-                const cursoNome = selectCurso.value;
-
-                // Redireciona para a página programs-stu.html com o parâmetro cursoId
-                window.location.href = `programs-stu.html?cursoNome=${cursoNome}`;
-            });
-        } catch (error) {
-            console.error('Erro ao obter cursos do aluno:', error);
+        function obterEstIdDeAlgumaForma() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('estId') || '';
         }
-    });
-</script>
+
+        window.addEventListener('load', async function () {
+    try {
+        const estId = obterEstIdDeAlgumaForma();
+        const cursos = await listarCursoStu(estId);
+
+        const selectCurso = document.getElementById('curso_nome');
+        const listarCursosBtn = document.getElementById('listarCursosBtn');
+        const tableBody = document.getElementById('tbestudante');
+
+        selectCurso.innerHTML = '';
+        cursos.forEach(curso => {
+            const option = document.createElement('option');
+            option.text = curso;
+            selectCurso.appendChild(option);
+        });
+
+        listarCursosBtn.addEventListener('click', async function (event) {
+            event.preventDefault();
+            const cursoNome = selectCurso.value;
+            const opcoes = await listarOpcoes(cursoNome);
+            
+
+            window.location.href = `programs-stu.html?cursoNome=${cursoNome}`;
+        });
+    } catch (error) {
+        console.error('Erro ao obter cursos do aluno:', error);
+    }
+});
+
+
+
+
+    </script>
 
 
 </body>

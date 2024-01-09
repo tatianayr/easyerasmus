@@ -184,18 +184,19 @@
 
     <script>
         async function listarOpcoes(cursoNome) {
-            try {
-                const response = await fetch(`/api/user/listar-opcoes/${cursoNome}`);
-                const data = await response.json();
-                return data.opcoes;
-            } catch (error) {
-                console.error('Erro ao obter opcoes do aluno:', error);
-                throw error;
-            }
-        }
+    try {
+        const response = await fetch(`/api/user/listar-opcoes/${cursoNome}`);
+        const data = await response.json();
+        return data.opcoes;
+    } catch (error) {
+        console.error('Erro ao obter opcoes do aluno:', error);
+        throw error;
+    }
+}
+
 
         function exibirOpcoes(opcoes) {
-            
+
             console.log("Opções recebidas:", opcoes);
 
             const tableBody = document.getElementById('tbestudante');
@@ -226,6 +227,17 @@
                 cell7.textContent = opcao.req_media;
             });
         }
+
+        function obterCursoSelecionadoDeAlgumaForma() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('cursoNome') || '';
+        }
+
+        document.addEventListener('DOMContentLoaded', async function () {
+            const cursoNome = obterCursoSelecionadoDeAlgumaForma();
+            const opcoes = await listarOpcoes(cursoNome);
+            exibirOpcoes(opcoes);
+        });
 
     </script>
 </body>

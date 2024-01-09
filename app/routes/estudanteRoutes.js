@@ -146,7 +146,7 @@ router.get('/listar-cursostu/:estId', async function (req, res) {
 
 router.get('/listar-opcoes/:cursoNome', async function (req, res) {
     try {
-        const cursoNome = req.params.cursoNome; // Corrected to use req.params
+        const cursoNome = req.params.cursoNome; 
         const userInstance = new User();
         const opcoes = await userInstance.listarOpcoes(cursoNome);
         res.status(200).json({ opcoes });
