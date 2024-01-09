@@ -24,17 +24,20 @@ async function requestRegister(nome, mail, pass, uni) {
     }
 }
 async function requestLogin(user) {
+    const est_mail = document.getElementById("est_mail").value;
+    const est_pass = document.getElementById("est_pass").value;
     try {
         console.log('Requesting login for:', user);
         const response = await fetch('/api/user/auth', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem("token")}`
             },
             body: JSON.stringify({
-                mail: user.mail,
-                pass: user.pass,
+                est_mail,
+                est_pass
             })
         });
 
@@ -46,6 +49,8 @@ async function requestLogin(user) {
         return { status: 500 };
     }
 }
+
+
 
 async function register() {
     let msgDOM = document.getElementById('msg');
@@ -78,8 +83,8 @@ async function login() {
     let msgDOM = document.getElementById('msg');
 
     try {
-        let mail = document.getElementById('mail').value;
-        let pass = document.getElementById('pass').value;
+        let mail = document.getElementById('est_mail').value;
+        let pass = document.getElementById('est_pass').value;
 
         if (mail && pass) {
             let user = {

@@ -11,7 +11,6 @@ function dbAdminToAdmin(dbAdmin) {
     admin.pass = dbAdmin.admin_pass;
     return admin;
 }
-
 class Admin {
     constructor(id, mail, uni, pass, token) {
         this.id = id;

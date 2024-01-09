@@ -97,24 +97,19 @@
 
         </div>
     </div>
-    <section class="banner_area">
-        <div class="container">
-            <div class="row justify-content-center align-items-center">
-                <div class="col-md-7">
-                    <form action="script" method="GET" id="curso_form" class="contact-form-box" data-wow-delay="0.2s">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <!-- Substituído o campo de texto por um dropdown -->
-                                <select name="curso_nome" id="curso_nome" class="form-control">
-                                    <!-- Opções dinâmicas serão preenchidas via JavaScript -->
-                                </select>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+    <!-- cursos-stu.html -->
+<form action="script" method="GET" id="curso_form" class="contact-form-box" data-wow-delay="0.2s">
+    <input type="hidden" name="estId" id="estIdInput" /> <!-- Adicione esta linha -->
+    <div class="row">
+        <div class="col-md-6">
+            <select name="curso_nome" id="curso_nome" class="form-control">
+                <!-- Opções dinâmicas serão preenchidas via JavaScript -->
+            </select>
         </div>
-    </section>
+    </div>
+</form>
+
+    
 
 
     <footer class="footer-area">
@@ -178,41 +173,42 @@
         </div>
     </footer>
 
-    <script>
-        async function listarCursoSTU() {
-            try {
-                const response = await fetch('/listar-cursostu');
-                const data = await response.json();
-                return data.cursos;
-            } catch (error) {
-                console.error('Erro ao obter cursos do aluno:', error);
-                throw error;
-            }
-        }
+   <!-- cursos-stu.html -->
+<script>
+  // Função para listar cursos
+async function listarCursoSTU(estId) {
+    try {
+        const response = await fetch(`/api/user/listar-cursostu/${estId}`);
+        const data = await response.json();
+        return data.cursos;
+    } catch (error) {
+        console.error('Erro ao obter cursos do aluno:', error);
+        throw error;
+    }
+}
 
-        window.addEventListener('load', async function () {
-            try {
-                // Call the listarCursoSTU function to get the list of courses
-                const cursos = await listarCursoSTU();
+// Função para obter o estId de alguma forma (pode ser da URL, formulário, etc.)
+function obterEstIdDeAlgumaForma() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('estId') || '';
+}
 
-                // Select the dropdown element by its ID
-                const cursoDropdown = document.getElementById('curso_nome');
+// Agora, onde você precisar listar os cursos, faça algo como:
+window.addEventListener('load', async function () {
+    try {
+        // Obter o estId de alguma forma (URL, formulário, etc.)
+        const estId = obterEstIdDeAlgumaForma();
 
-                // Clear any existing options
-                cursoDropdown.innerHTML = "";
+        // Chamar a função listarCursoSTU com o estId
+        const cursos = await listarCursoSTU(estId);
 
-                // Iterate through the courses and create options dynamically
-                for (let i = 0; i < cursos.length; i++) {
-                    let option = document.createElement("option");
-                    option.value = cursos[i];
-                    option.text = cursos[i];
-                    cursoDropdown.add(option);
-                }
-            } catch (error) {
-                console.error('Erro ao preencher dropdown de cursos:', error);
-            }
-        });
+        // Restante do seu código...
+    } catch (error) {
+        console.error('Erro ao obter cursos do aluno:', error);
+    }
+});
 
+</script>
+</body>
 
-
-    </script>
+</html>

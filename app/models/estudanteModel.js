@@ -12,12 +12,13 @@ function dbUserToUser(dbUser) {
 }
 
 class User {
-    constructor(id, nome, pass, uni, token) {
+    constructor(id, nome, pass, uni, mail, token) {
         this.id = id;
         this.nome = nome;
         this.pass = pass;
         this.uni = uni;
         this.token=token;
+        this.mail=mail;
     }
 
     static async getById(id){
@@ -66,29 +67,39 @@ class User {
 
     static async checkLogin(user) {
         try {
+            console.log("Checking login for email:", user.mail);
+    
             const loginQuery = "SELECT * FROM estudante WHERE est_mail = $1";
             const dbResult = await pool.query(loginQuery, [user.mail]);
-
+    
+            console.log("DB Result:", dbResult);
+    
             if (dbResult.rows.length === 0) {
+                console.log("Email not found");
                 return { status: 401, result: { msg: "Email not found" } };
             }
-
+    
             const dbUser = dbResult.rows[0];
-
+    
             const isPassValid = await bcrypt.compare(user.pass, dbUser.est_pass);
-
+    
             if (!isPassValid) {
+                console.log("Incorrect password");
                 return { status: 401, result: { msg: "Incorrect password" } };
             }
-
+    
             const authenticatedUser = dbUserToUser(dbUser);
-
+    
+            console.log("Login successful:", authenticatedUser);
+    
             return { status: 200, result: authenticatedUser };
         } catch (err) {
-            console.log(err);
+            console.log("Error during login check:", err);
             return { status: 500, result: err };
         }
     }
+    
+    
 
     async listarUniversidades() {
         const query = 'SELECT DISTINCT admin_uni FROM administrador;';
@@ -111,6 +122,22 @@ class User {
         } catch (error) {
             console.error('Erro ao listar cursos para os alunos:', error);
             throw error;
+        }
+    }
+
+    
+    static async saveToken(user) {
+        try {
+            console.log("Saving token for user:", user.id);
+            console.log("Token to be saved:", user.token);
+    
+            let dbResult = await pool.query(`Update estudante set est_token=$1 where est_id = $2`, [user.token, user.id]);
+    
+            console.log("Token saved for user:", user.id);
+            return { status: 200, result: { msg: "Token saved!" } };
+        } catch (err) {
+            console.log("Error saving token:", err);
+            return { status: 500, result: err };
         }
     }
     

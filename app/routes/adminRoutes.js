@@ -25,7 +25,7 @@ router.get('/auth', auth.verifyAuth, async function (req, res, next) {
 
 router.post('/auth', async function (req, res, next) {
     try {
-        console.log("Login user ");
+        console.log("Admin user ");
         let admin = new Admin();
         admin.mail = req.body.adminmail;
         admin.pass = req.body.password;

@@ -3,10 +3,48 @@ const router = express.Router();
 const User = require("../models/estudanteModel");
 const utils = require("../config/utils");
 const auth = require("../middleware/auth");
+const tokenSize = 64;
 const bcrypt = require("bcrypt");
 const pool = require("../config/database");
 
 router.use(express.json());
+
+
+
+router.post('/auth', async function (req, res) {
+    try {
+        console.log("Login user ");
+        let user = new User();
+        user.mail = req.body.est_mail;
+        user.pass = req.body.est_pass;
+
+        const token = utils.genToken(tokenSize);
+        console.log("Generated token:", token);
+
+        req.session.token = token;
+        // Dentro da rota de autenticação
+        let result = await User.checkLogin(user);
+
+console.log("Result from checkLogin:", result);
+
+if (result.status != 200) {
+    res.status(result.status).send(result.result);
+    return;
+}
+
+
+        const estId = result.result.id;
+        user = result.result;
+        user.token = token;
+        result = await User.saveToken(user);
+        console.log(user);
+
+        res.status(200).send({ msg: "Successful Login!", estId: estId });
+    } catch (err) {
+        console.log(err);
+        res.status(500).send(err);
+    }
+});
 
 router.get('/auth', auth.verifyAuth, async function (req, res, next) {
     try {
@@ -88,16 +126,25 @@ router.get('/listar-universidades', async function (req, res) {
 });
 
 router.get('/listar-cursostu/:estId', async function (req, res) {
+    console.log('Rota /listar-cursostu/:estId alcançada.');
     try {
-        const estId = req.params.estId; // Corrected to use req.params
+        
+    
+        const estId = req.params.estId; 
+        console.log('estId:', estId);
+
         const userInstance = new User();
         const cursos = await userInstance.listarCursoStu(estId);
+
+        console.log('Cursos:', cursos);
         res.status(200).json({ cursos });
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: "Erro ao listar cursos do aluno." });
     }
 });
+
+
 
 
 
