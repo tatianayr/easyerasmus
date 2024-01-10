@@ -119,36 +119,32 @@
         </div>
     </div>
 
-    <div class="titulo-area titulo-1" data-image-src="assets/images/services/one-background.jpg">
-        <div class="overlay" data-bg-color="#282835"></div>
-        <div class="container">
-
-        </div>
-    </div>
-
     <!-- cursos-stu.html -->
     <section class="banner_area">
         <div class="container">
             <div class="row justify-content-center align-items-center">
-                <div class="col-md-4">
-                    <form action="script" method="GET" id="curso_form" class="contact-form-box" data-wow-delay="0.2s">
-                        <input type="hidden" name="estId" id="estIdInput" /> <!-- Adicione esta linha -->
-                        <div class="row">
-                            <div class="col-md-12">
-                                <select name="curso_nome" id="curso_nome" class="form-control">
-                                    <!-- Options will be dynamically filled via JavaScript -->
-                                </select>
+                <div class="col-md-6">
+                    <div class="contact-form-box text-center">
+                        <h2 class="section-title">Selecione o seu curso</h2>
+                        <form action="script" method="GET" id="curso_form">
+                            <input type="hidden" name="estId" id="estIdInput" />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <select name="curso_nome" id="curso_nome" class="form-control">
+                                        <!-- Options will be dynamically filled via JavaScript -->
+                                    </select>
+                                </div>
+                                <div class="col-md-12 mt-3">
+                                    <button id="listarCursosBtn" class="btn btn-primary btn-block">Listar Cursos</button>
+                                </div>
                             </div>
-                            <div class="col-md-12">
-                                <!-- Add a button to trigger the course listing -->
-                                <button id="listarCursosBtn" class="btn btn-primary">Listar Cursos</button>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
+    
 
 
     <footer class="footer-area">
@@ -197,7 +193,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="contact.html"><i class="fa fa-angle-right" aria-hidden="true"></i> Sign
+                                    <a href="login-stu.html"><i class="fa fa-angle-right" aria-hidden="true"></i> Sign
                                         In
                                     </a>
                                 </li>

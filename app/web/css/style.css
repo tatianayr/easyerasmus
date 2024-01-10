@@ -19,6 +19,7 @@
 /* --- Fonte  --- */
 
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
 @font-face {
   font-family: "Inter";
   font-weight: 600;
@@ -27,7 +28,7 @@
 
 /* --- Geral --- */
 
-/* -- Corpo -- */ 
+/* -- Corpo -- */
 
 body {
   line-height: 30px;
@@ -42,7 +43,8 @@ a {
   text-decoration: none;
 }
 
-a:hover, a:focus {
+a:hover,
+a:focus {
   text-decoration: none;
   outline: 0;
 }
@@ -77,7 +79,7 @@ i:before {
 button:focus {
   outline: none;
   -webkit-box-shadow: none;
-          box-shadow: none;
+  box-shadow: none;
 }
 
 .error_input {
@@ -104,7 +106,8 @@ button:focus {
   padding-top: 20px;
 }
 
-#mail_success, #mail_fail {
+#mail_success,
+#mail_fail {
   display: none;
 }
 
@@ -119,7 +122,7 @@ label:focus,
 button:focus {
   outline: 0px !important;
   -webkit-box-shadow: none !important;
-          box-shadow: none !important;
+  box-shadow: none !important;
 }
 
 .gradient_bg {
@@ -157,7 +160,12 @@ button:focus {
   padding: 2px 7px;
 }
 
-.heading-style h1, .heading-style h2, .heading-style h3, .heading-style h4, .heading-style h5, .heading-style h6 {
+.heading-style h1,
+.heading-style h2,
+.heading-style h3,
+.heading-style h4,
+.heading-style h5,
+.heading-style h6 {
   color: #020202;
   font-weight: 700;
 }
@@ -229,22 +237,23 @@ button:focus {
 
 .navbar-sticky.sticky {
   -webkit-box-shadow: 0px 4px 6px 0px rgba(12, 0, 46, 0.05);
-          box-shadow: 0px 4px 6px 0px rgba(12, 0, 46, 0.05);
+  box-shadow: 0px 4px 6px 0px rgba(12, 0, 46, 0.05);
   background: #fff;
   -webkit-transition: all 0.33s cubic-bezier(0.694, 0.0482, 0.335, 1);
   transition: all 0.33s cubic-bezier(0.694, 0.0482, 0.335, 1);
 }
 
-.navbar-sticky.sticky .menu > .nav-item {
+.navbar-sticky.sticky .menu>.nav-item {
   padding-top: 30px;
   padding-bottom: 30px;
 }
 
-.navbar-sticky.sticky .menu > .nav-item > .nav-link {
+.navbar-sticky.sticky .menu>.nav-item>.nav-link {
   color: #7a7a7a;
 }
 
-.navbar-sticky.sticky .menu > .nav-item:hover > .nav-link, .navbar-sticky.sticky .menu > .nav-item.active > .nav-link {
+.navbar-sticky.sticky .menu>.nav-item:hover>.nav-link,
+.navbar-sticky.sticky .menu>.nav-item.active>.nav-link {
   color: #C00000;
 }
 
@@ -277,7 +286,7 @@ button:focus {
   display: none;
 }
 
-.navbar-sticky.sticky .navbar-brand img + img {
+.navbar-sticky.sticky .navbar-brand img+img {
   display: inline-block;
 }
 
@@ -292,11 +301,11 @@ button:focus {
   background: transparent;
 }
 
-.navbar .navbar-brand img + img {
+.navbar .navbar-brand img+img {
   display: none;
 }
 
-.menu_black .menu > .nav-item .nav-link {
+.menu_black .menu>.nav-item .nav-link {
   color: #020202;
 }
 
@@ -312,7 +321,7 @@ button:focus {
   color: #020202;
 }
 
-.menu > .nav-item {
+.menu>.nav-item {
   margin-left: 36px;
   position: relative;
   padding-bottom: 40px;
@@ -321,7 +330,7 @@ button:focus {
   transition: all 0.2s linear;
 }
 
-.menu > .nav-item > .nav-link {
+.menu>.nav-item>.nav-link {
   font-family: "Inter", sans-serif;
   font-size: 18px;
   font-weight: 500;
@@ -332,19 +341,19 @@ button:focus {
   transition: color 0.3s linear;
 }
 
-.menu > .nav-item > .nav-link:after {
+.menu>.nav-item>.nav-link:after {
   display: none;
 }
 
-.menu > .nav-item.active .nav-link {
+.menu>.nav-item.active .nav-link {
   color: #C00000;
 }
 
-.menu > .nav-item:hover .nav-link {
+.menu>.nav-item:hover .nav-link {
   color: #C00000;
 }
 
-.menu > .nav-item:hover .nav-link:before {
+.menu>.nav-item:hover .nav-link:before {
   width: 100%;
   left: 0;
   right: auto;
@@ -352,8 +361,8 @@ button:focus {
 
 .nav_right {
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .nav_right:before {
@@ -527,7 +536,7 @@ button:focus {
   outline: none;
   border: 1px solid #C00000;
   -webkit-box-shadow: none;
-          box-shadow: none;
+  box-shadow: none;
 }
 
 .subscribe input.placeholder {
@@ -567,7 +576,7 @@ button:focus {
 
 .subscribe button:focus {
   -webkit-box-shadow: none;
-          box-shadow: none;
+  box-shadow: none;
   outline: none;
 }
 
@@ -613,7 +622,8 @@ button:focus {
   color: #C00000;
 }
 
-.form-subscriber.error, .sidebar-newsletter.error {
+.form-subscriber.error,
+.sidebar-newsletter.error {
   display: block !important;
 }
 
@@ -649,7 +659,7 @@ button:focus {
   width: 200%;
   height: 0;
   -webkit-transform: translate3d(-50%, -50%, 0) rotate(45deg);
-          transform: translate3d(-50%, -50%, 0) rotate(45deg);
+  transform: translate3d(-50%, -50%, 0) rotate(45deg);
   -webkit-transition: all 0.45s;
   transition: all 0.45s;
   z-index: -1;
@@ -703,13 +713,13 @@ button:focus {
 
 .button-container {
   padding-left: 90px;
-  margin-top: 10px; 
+  margin-top: 10px;
 }
 
 /* Banners */
 
 .banner_area {
-  padding: 200px 0px 100px;
+  padding: 150px 0px 100px;
 }
 
 .banner_content h6 {
@@ -755,11 +765,11 @@ button:focus {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
 
 .dobra-content {
@@ -854,13 +864,13 @@ button:focus {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  flex-wrap: wrap;
   -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   margin-bottom: -10px;
 }
 
@@ -968,7 +978,7 @@ button:focus {
 .table-container {
   display: flex;
   flex-direction: column;
-  justify-content: center; 
+  justify-content: center;
   align-items: center;
   padding-bottom: 40px;
 }
@@ -992,13 +1002,15 @@ button:focus {
   width: 80%;
 }
 
-.erasmus-table th, .erasmus-table td {
+.erasmus-table th,
+.erasmus-table td {
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.5px;
 }
 
-.erasmus-table th, .erasmus-table td {
+.erasmus-table th,
+.erasmus-table td {
   border: 1px solid #ddd;
   padding: 10px;
   text-align: center;
@@ -1068,15 +1080,15 @@ button:focus {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  flex-wrap: wrap;
   margin-left: -5px;
   margin-right: -5px;
 }
 
 .contact-inner .form-group {
   -webkit-box-flex: 0;
-      -ms-flex: 0 0 auto;
-          flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
   width: 36.5%;
   padding-right: 5px;
   padding-left: 5px;
@@ -1104,7 +1116,7 @@ button:focus {
 .contact-inner .form-group .name:focus {
   border: 1px solid #C00000;
   -webkit-box-shadow: none;
-          box-shadow: none;
+  box-shadow: none;
   outline: none;
   border-radius: 5px;
 }
@@ -1165,7 +1177,7 @@ button:focus {
 .contact-form-box input:focus {
   border: 1px solid #C00000;
   -webkit-box-shadow: none;
-          box-shadow: none;
+  box-shadow: none;
   outline: none;
 }
 
@@ -1204,7 +1216,7 @@ button:focus {
 .contact-form-box textarea:focus {
   border: 1px solid #C00000;
   -webkit-box-shadow: none;
-          box-shadow: none;
+  box-shadow: none;
   outline: none;
 }
 
@@ -1344,7 +1356,7 @@ button:focus {
 
 .input-box input:focus~label,
 .input-box input:valid~label {
-    top: -5px;
+  top: -5px;
 }
 
 .form-box .remember-forgot {
@@ -1428,3 +1440,29 @@ button:focus {
 
 
 
+
+.table-container {
+  overflow-x: auto;
+  margin-top: 30px;
+}
+
+.erasmus-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.erasmus-table th,
+.erasmus-table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.erasmus-table th {
+  background-color: #f2f2f2;
+}
+
+.erasmus-table tbody tr:hover {
+  background-color: #f5f5f5;
+}
