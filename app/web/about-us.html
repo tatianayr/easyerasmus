@@ -66,14 +66,18 @@
                                         </a>
                                     </li>
                                     
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="login-stu.html" role="button"
-                                            aria-haspopup="true" aria-expanded="false">
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="signInDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             Sign In
                                         </a>
+                                        <div class="dropdown-menu" aria-labelledby="signInDropdown">
+                                            <a class="dropdown-item" href="login-stu.html">Estudante</a>
+                                            <a class="dropdown-item" href="login-uni.html">Universidade</a>
+                                        </div>
                                     </li>
                                 </ul>
                             </div>
+                            
                             
                             <ul class="navbar-nav nav_right">
                                 <li class="nav-item ab-h-btn">
@@ -94,17 +98,24 @@
         </div>
     </div>
     
-    <!--dobra area-->
-    <div class="contact-area-two"> 
+    <div class="contact-area-two">
         <div class="container">
-            <div class="dobra-content">
-            <h2 class="title">ABOUT US</h2>
-                <p>A easyerasmus foi criada com o propósito de fornecer informações essenciais a todos os estudante sobre as opções de destino disponíveis para um programa Erasmus oferecidas pela respetiva universidade. </p>
-                <p>Um dos principais objetivos desta plataforma é estabelecer um ambiente virtual onde cada instituição de ensino superior possa inserir detalhes relevantes sobre os países de destino, os tipos de programas oferecidos, as cidades associadas, as universidades parceiras e o número de vagas disponíveis para cada curso ou área de estudo específica. </p>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="dobra-content">
+        
+                        <p>A easyerasmus foi criada com o propósito de fornecer informações essenciais a todos os estudantes sobre as opções de destino disponíveis para um programa Erasmus oferecidas pela respetiva universidade.</p>
+                        <p>Um dos principais objetivos desta plataforma é estabelecer um ambiente virtual onde cada instituição de ensino superior possa inserir detalhes relevantes sobre os países de destino, os tipos de programas oferecidos, as cidades associadas, as universidades parceiras e o número de vagas disponíveis para cada curso ou área de estudo específica.</p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="banner_img">
+                        <img class="layer layer2 img_one" data-depth="-0.20" src="\imagens\pexels-photo-1106468.jpeg" alt="banner-img">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-     
     <!-- Footer -->
     <footer class="footer-area">
         <div class="container">
@@ -154,7 +165,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="contact.html"><i class="fa fa-angle-right" aria-hidden="true"></i>
+                                    <a href="signup-stu.html"><i class="fa fa-angle-right" aria-hidden="true"></i>
                                         Sign In
                                     </a>
                                 </li>

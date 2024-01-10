@@ -36,39 +36,43 @@
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul class="navbar-nav menu ms-lg-auto">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="index.html" role="button"
-                                            aria-haspopup="true" aria-expanded="false">
+                                        <a class="nav-link" href="index.html" role="button" aria-haspopup="true"
+                                            aria-expanded="false">
                                             Home
                                         </a>
                                     </li>
 
                                     <li class="nav-item">
-                                        <a class="nav-link" href="about-us.html"
-                                            role="button" aria-haspopup="true"
+                                        <a class="nav-link" href="about-us.html" role="button" aria-haspopup="true"
                                             aria-expanded="false">
                                             About Us
                                         </a>
                                     </li>
 
                                     <li class="nav-item">
-                                        <a class="nav-link" href="features.html" role="button"
-                                            aria-haspopup="true" aria-expanded="false">
+                                        <a class="nav-link" href="features.html" role="button" aria-haspopup="true"
+                                            aria-expanded="false">
                                             Features
                                         </a>
                                     </li>
 
                                     <li class="nav-item">
-                                        <a class="nav-link" href="contact.html" role="button"
-                                            aria-haspopup="true" aria-expanded="false">
+                                        <a class="nav-link" href="contact.html" role="button" aria-haspopup="true"
+                                            aria-expanded="false">
                                             Contact Us
                                         </a>
                                     </li>
 
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="login-stu.html" role="button"
-                                            aria-haspopup="true" aria-expanded="false">
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="signInDropdown" role="button"
+                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             Sign In
                                         </a>
+                                        <div class="dropdown-menu" aria-labelledby="signInDropdown">
+                                            <a class="dropdown-item" href="login-stu.html">Estudante</a>
+                                            <a class="dropdown-item" href="login-uni.html">Universidade</a>
+                                        </div>
+                                    </li>
                                     </li>
                                 </ul>
                             </div>
@@ -110,7 +114,7 @@
                             <th>MÉDIA</th>
                         </tr>
                     </thead>
-    
+
                     <tbody id="table-body">
                         <!-- Dados serão preenchidos dinamicamente pelo script -->
                     </tbody>
@@ -118,37 +122,37 @@
             </div>
         </div>
     </section>
-    
+
 
     <script>
         async function listarProgramas() {
             try {
                 const response = await fetch("/api/programa/listar-programas");
                 const data = await response.json();
-    
+
                 console.log("Dados recebidos:", data);
-    
+
                 const programas = Array.isArray(data.universidades) ? data.universidades : [];
-    
+
                 const tableBody = document.getElementById("table-body");
-    
+
                 programas.forEach(programa => {
                     const newRow = tableBody.insertRow();
-    
+
                     // Adicione as células com os dados do programa
                     const programaCells = ["progPais", "progTipo", "progUni", "progCid"];
                     programaCells.forEach(cell => {
                         const newCell = newRow.insertCell();
                         newCell.textContent = programa[cell];
                     });
-    
+
                     // Adicione as células com os dados da oferta
                     const ofertaCells = ["ofCurso", "ofVaga"];
                     ofertaCells.forEach(cell => {
                         const newCell = newRow.insertCell();
                         newCell.textContent = programa[cell];
                     });
-    
+
                     // Adicione as células com os dados dos requisitos
                     const requisitosCells = ["reqCurso", "reqMedia"];
                     requisitosCells.forEach(cell => {
@@ -160,13 +164,13 @@
                 console.error("Erro ao listar programas:", error);
             }
         }
-    
+
         document.addEventListener("DOMContentLoaded", () => {
             listarProgramas();
         });
     </script>
-    
-    
+
+
 
     <!-- Footer -->
     <footer class="footer-area">
@@ -180,8 +184,7 @@
                             </a>
                             <div class="subscriber-wrap subscriber2">
                                 <p>Recebe todas as novidades aqui!</p>
-                                <form class="subscribe subscriber-form" id="subscriber-form2"
-                                    data-style="style2">
+                                <form class="subscribe subscriber-form" id="subscriber-form2" data-style="style2">
                                     <input type="email" name="EMAIL" class="form-control form-newsletter"
                                         id="form-email" placeholder="Email">
                                     <button class="btn hover_btn" type="submit">subscrever

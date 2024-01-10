@@ -138,7 +138,7 @@ button:focus {
 
 .title h6 {
   font-weight: 500;
-  color: #ff5757;
+  color: #C00000;
   font-size: 16px;
   line-height: 1.3;
   margin-bottom: 10px;
@@ -153,7 +153,7 @@ button:focus {
 /* --- Texto --- */
 
 .off-red {
-  background-color: #ff5757;
+  background-color: #C00000;
   padding: 2px 7px;
 }
 
@@ -245,7 +245,7 @@ button:focus {
 }
 
 .navbar-sticky.sticky .menu > .nav-item:hover > .nav-link, .navbar-sticky.sticky .menu > .nav-item.active > .nav-link {
-  color: #ff5757;
+  color: #C00000;
 }
 
 .navbar-sticky.sticky .nav_right:before {
@@ -262,7 +262,7 @@ button:focus {
 }
 
 .navbar-sticky.sticky .nav_right .nav-item .search-btn:hover {
-  color: #ff5757;
+  color: #C00000;
 }
 
 .navbar-sticky.sticky .nav_right .nav-item .about-h-btn {
@@ -270,7 +270,7 @@ button:focus {
 }
 
 .navbar-sticky.sticky .nav_right .nav-item .about-h-btn:hover {
-  color: #ff5757;
+  color: #C00000;
 }
 
 .navbar-sticky.sticky .navbar-brand img {
@@ -337,11 +337,11 @@ button:focus {
 }
 
 .menu > .nav-item.active .nav-link {
-  color: #ff5757;
+  color: #C00000;
 }
 
 .menu > .nav-item:hover .nav-link {
-  color: #ff5757;
+  color: #C00000;
 }
 
 .menu > .nav-item:hover .nav-link:before {
@@ -447,7 +447,7 @@ button:focus {
 }
 
 .footer-navigation li a:hover {
-  color: #ff5757;
+  color: #C00000;
 }
 
 .footer-navigation li a:hover i {
@@ -476,7 +476,7 @@ button:focus {
   color: #ffffff;
   height: 35px;
   width: 35px;
-  background: #ff5757;
+  background: #C00000;
   display: inline-block;
   text-align: center;
   line-height: 35px;
@@ -486,7 +486,7 @@ button:focus {
 }
 
 .footer-social-icon li a:hover {
-  color: #ff5757;
+  color: #C00000;
   background: #ffffff;
 }
 
@@ -525,7 +525,7 @@ button:focus {
 
 .subscribe input:focus {
   outline: none;
-  border: 1px solid #ff5757;
+  border: 1px solid #C00000;
   -webkit-box-shadow: none;
           box-shadow: none;
 }
@@ -583,7 +583,7 @@ button:focus {
 }
 
 .newsletter-form #validator-newsletter {
-  color: #ff5757;
+  color: #C00000;
   position: relative;
   top: 8px;
   font-size: 16px;
@@ -610,7 +610,7 @@ button:focus {
 }
 
 #validator-subscriber.validation-danger {
-  color: #ff5757;
+  color: #C00000;
 }
 
 .form-subscriber.error, .sidebar-newsletter.error {
@@ -629,7 +629,7 @@ button:focus {
   text-transform: capitalize;
   display: inline-block;
   padding: 6px 38px;
-  background-color: #ff5757;
+  background-color: #C00000;
   border: 0px;
   color: #ffffff;
   overflow: hidden;
@@ -666,11 +666,11 @@ button:focus {
 
 .blue_btn {
   font-weight: 500;
-  background: #3740ff;
+  background: #C00000;
 }
 
 .blue_btn:before {
-  background: #545bf7;
+  background: #8d3b3b69;
 }
 
 .blue_btn i {
@@ -698,7 +698,7 @@ button:focus {
 }
 
 .text_btn:hover {
-  color: #ff5757;
+  color: #C00000;
 }
 
 .button-container {
@@ -715,7 +715,7 @@ button:focus {
 .banner_content h6 {
   font-size: 14px;
   font-weight: 500;
-  color: #ff5757;
+  color: #C00000;
   letter-spacing: 0.2em;
   margin-bottom: 15px;
 }
@@ -778,7 +778,7 @@ button:focus {
 
 .dobra-content p {
   font-size: 20px;
-  line-height: 30px;
+  line-height: 35px;
   color: #272727;
   max-width: 800px;
   margin: 0 auto;
@@ -818,7 +818,7 @@ button:focus {
 }
 
 .dobra-list span a:hover span {
-  color: #ff5757;
+  color: #C00000;
 }
 
 .dobra-list span.br-devider {
@@ -826,7 +826,7 @@ button:focus {
 }
 
 .dobra-list span.current {
-  color: #ff5757;
+  color: #C00000;
 }
 
 .dobra-1 {
@@ -903,7 +903,7 @@ button:focus {
   height: 60px;
   width: 60px;
   line-height: 60px;
-  background-color: #ff5757;
+  background-color: #C00000;
   color: #ffffff;
   font-size: 25px;
   border-radius: 50px;
@@ -935,7 +935,7 @@ button:focus {
   position: absolute;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
-  background-color: #ff5757;
+  background-color: #C00000;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   border-radius: 5px;
@@ -952,7 +952,7 @@ button:focus {
 
 .single-features:hover .icon i {
   background-color: #ffffff;
-  color: #ff5757;
+  color: #C00000;
 }
 
 .single-features:hover h3 {
@@ -1102,7 +1102,7 @@ button:focus {
 }
 
 .contact-inner .form-group .name:focus {
-  border: 1px solid #ff5757;
+  border: 1px solid #C00000;
   -webkit-box-shadow: none;
           box-shadow: none;
   outline: none;
@@ -1163,7 +1163,7 @@ button:focus {
 }
 
 .contact-form-box input:focus {
-  border: 1px solid #ff5757;
+  border: 1px solid #C00000;
   -webkit-box-shadow: none;
           box-shadow: none;
   outline: none;
@@ -1202,7 +1202,7 @@ button:focus {
 }
 
 .contact-form-box textarea:focus {
-  border: 1px solid #ff5757;
+  border: 1px solid #C00000;
   -webkit-box-shadow: none;
           box-shadow: none;
   outline: none;
@@ -1252,7 +1252,7 @@ button:focus {
 }
 
 .contact-address ul li a i {
-  color: #ff5757;
+  color: #C00000;
   margin-right: 15px;
   font-size: 18px;
   position: absolute;
@@ -1408,6 +1408,23 @@ button:focus {
   margin-bottom: 70px;
 }
 
+/* Custom Styles for Dropdown */
+.navbar-nav .nav-item.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item {
+  color: #333;
+  transition: background-color 0.3s;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+}
 
 
 
