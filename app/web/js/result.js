@@ -11,27 +11,33 @@ function exibirResultados(resultados) {
         const row = tableBody.insertRow();
 
         const cell1 = row.insertCell(0);
-        cell1.textContent = resultado.prog_tipo;
+        cell1.textContent = resultado.admin_uni;
 
         const cell2 = row.insertCell(1);
-        cell2.textContent = resultado.prog_uni;
+        cell2.textContent = resultado.curso_nome;
 
         const cell3 = row.insertCell(2);
-        cell3.textContent = resultado.prog_pais;
+        cell3.textContent = resultado.prog_tipo;
 
         const cell4 = row.insertCell(3);
-        cell4.textContent = resultado.prog_cid;
+        cell4.textContent = resultado.prog_uni;
 
         const cell5 = row.insertCell(4);
-        cell5.textContent = resultado.of_curso;
+        cell5.textContent = resultado.prog_pais;
 
         const cell6 = row.insertCell(5);
-        cell6.textContent = resultado.of_vaga;
+        cell6.textContent = resultado.prog_cid;
 
         const cell7 = row.insertCell(6);
-        cell7.textContent = resultado.req_media;
+        cell7.textContent = resultado.of_curso;
 
-        const cellEditar = row.insertCell(7);
+        const cell8 = row.insertCell(7);
+        cell8.textContent = resultado.of_vaga;
+
+        const cell9 = row.insertCell(8);
+        cell9.textContent = resultado.req_media;
+
+        const cellEditar = row.insertCell(9);
         const editButton = document.createElement('button');
         editButton.textContent = 'Editar';
         editButton.classList.add('editButton');
