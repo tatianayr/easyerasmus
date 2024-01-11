@@ -1626,3 +1626,4 @@ body.show-chatbot .chatbot {
 .chat-input textarea:valid ~ span {
   visibility: visible;
 }
+
