@@ -19,6 +19,8 @@
     <script src="js\main.js"></script>
     <script src="js/userRequests.js"></script>
 
+    <script src="js\chatbot.js" defer></script>
+
     <title>Programs</title>
 </head>
 
@@ -94,7 +96,28 @@
             </div>
         </div>
     </div>
-    <!-- Nav Bar  -->
+    
+    <!-- chatbot  -->
+    <button class="chatbot-toggler">
+      <span class="fa fa-comment"></span>
+      <span class="fa fa-times"></span>
+    </button>
+    <div class="chatbot">
+      <header>
+        <h4>Chatbot</h4>
+        <span class="close-btn material-symbols-outlined">close</span>
+      </header>
+      <ul class="chatbox">
+        <li class="chat incoming">
+          <span class="fa fa-info"></span>
+          <p>Hi !<br>How can I help you ?</p>
+        </li>
+      </ul>
+      <div class="chat-input">
+        <textarea placeholder="Enter a message..." spellcheck="false" required></textarea>
+        <span id="send-btn" class="fa fa-arrow-right"></span>
+      </div>
+    </div>
 
     <section class="banner_area">
         <div class="container">
