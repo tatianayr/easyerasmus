@@ -1522,7 +1522,7 @@ body.show-chatbot .chatbot {
   transform: scale(1);
 }
 .chatbot header {
-  padding: 16px 0;
+  padding: 9px 0;
   position: relative;
   text-align: center;
   color: #fff;
@@ -1626,3 +1626,4 @@ body.show-chatbot .chatbot {
 .chat-input textarea:valid ~ span {
   visibility: visible;
 }
+
