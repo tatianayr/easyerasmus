@@ -1,9 +1,9 @@
 function obterAdminIdDoLocalStorage() {
     return localStorage.getItem('adminId') || '';
 }
-function exibirResultados(resultados) {
-    console.log("Resultados recebidos:", resultados);
 
+
+function exibirResultados(resultados) {
     const tableBody = document.getElementById('resultTableBody');
     tableBody.innerHTML = '';
 
@@ -11,38 +11,32 @@ function exibirResultados(resultados) {
         const row = tableBody.insertRow();
 
         const cell1 = row.insertCell(0);
-        cell1.textContent = resultado.admin_uni;
+        cell1.textContent = resultado.prog_tipo;
 
         const cell2 = row.insertCell(1);
-        cell2.textContent = resultado.curso_nome;
+        cell2.textContent = resultado.prog_uni;
 
         const cell3 = row.insertCell(2);
-        cell3.textContent = resultado.prog_tipo;
+        cell3.textContent = resultado.prog_pais;
 
         const cell4 = row.insertCell(3);
-        cell4.textContent = resultado.prog_uni;
+        cell4.textContent = resultado.prog_cid;
 
         const cell5 = row.insertCell(4);
-        cell5.textContent = resultado.prog_pais;
+        cell5.textContent = resultado.of_curso;
 
         const cell6 = row.insertCell(5);
-        cell6.textContent = resultado.prog_cid;
+        cell6.textContent = resultado.of_vaga;
 
         const cell7 = row.insertCell(6);
-        cell7.textContent = resultado.of_curso;
+        cell7.textContent = resultado.req_media;
 
-        const cell8 = row.insertCell(7);
-        cell8.textContent = resultado.of_vaga;
-
-        const cell9 = row.insertCell(8);
-        cell9.textContent = resultado.req_media;
-
-        const cell10 = row.insertCell(9);
+        const cellEditar = row.insertCell(7);
         const editButton = document.createElement('button');
         editButton.textContent = 'Editar';
         editButton.classList.add('editButton');
-        editButton.addEventListener('click', () => preencherFormularioEdicao(resultado));
-        cell10.appendChild(editButton);
+        editButton.addEventListener('click', (event) => preencherFormularioEdicao(resultado, event.target));
+        cellEditar.appendChild(editButton);
     });
 }
 
@@ -103,6 +97,9 @@ async function enviarAtualizacao() {
 
 function preencherFormularioEdicao(resultado) {
     const form = document.getElementById('edicaoForm');
+    const editButton = event.target;  // Adicione esta linha
+
+    // Adicione a classe diretamente ao botão
     editButton.classList.add('editButton');
 
     form.elements['prog_id'].value = resultado.prog_id;
@@ -116,5 +113,6 @@ function preencherFormularioEdicao(resultado) {
     form.elements['req_id'].value = resultado.req_id;
     form.elements['req_media'].value = resultado.req_media;
 }
+
 
 document.addEventListener('DOMContentLoaded', obterEExibirResultados);
